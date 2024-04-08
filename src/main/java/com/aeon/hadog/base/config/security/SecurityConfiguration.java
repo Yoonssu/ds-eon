@@ -22,7 +22,7 @@ public class SecurityConfiguration {
             .httpBasic(h->h.disable())
             .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((authorizeRequests) ->
-                    authorizeRequests.requestMatchers("/").permitAll()
+                    authorizeRequests.requestMatchers("/", "/user/**").permitAll()
                             .anyRequest().authenticated()
             );
         httpSecurity
