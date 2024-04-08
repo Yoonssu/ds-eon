@@ -34,6 +34,8 @@ dependencies {
 
 	implementation 'mysql:mysql-connector-java:8.0.32'
 	runtimeOnly 'com.h2database:h2'
+
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {
