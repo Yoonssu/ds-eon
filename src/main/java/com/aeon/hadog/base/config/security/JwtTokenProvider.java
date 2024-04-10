@@ -3,6 +3,7 @@ package com.aeon.hadog.base.config.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +11,8 @@ import java.util.Date;
 
 public class JwtTokenProvider {
 
-    private static final String SECRET_KEY = "NMA8JPctFuna59f5";
+    @Value("${springboot.jwt.secret}")
+    private static final String SECRET_KEY = "secretKey";
 
     // JWT Token 발급
     public static String createToken(String loginId) {
