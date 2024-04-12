@@ -60,5 +60,16 @@ public class UserService {
 
     }
 
+    public boolean checkId(String id){
+        return userRepository.existsById(id);
+    }
+
+    public boolean checkNickName(String nickName){
+        return userRepository.existsByNickname(nickName);
+    }
+
+    public boolean checkEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
 
 }
