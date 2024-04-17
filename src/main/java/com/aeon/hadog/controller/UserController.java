@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/join")
+    @PostMapping
     public ResponseEntity<ResponseDTO> register(@RequestBody JoinRequestDTO joinRequestDTO) {
         Long userId = userService.signup(joinRequestDTO);
 
