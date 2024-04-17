@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private JwtTokenProvider jwtTokenProvider;
     private PasswordEncoder passwordEncoder =new BCryptPasswordEncoder();
 
 
@@ -48,7 +49,7 @@ public class UserService {
     }
 
     public String signin(LoginRequestDTO loginRequestDTO){
-        User user = userRepository.findById(loginRequestDTO.getId()).orElseThrow();
+        User user = userRepository.findById(loginRequestDTO.getId()).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
 
         if(!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())){
             throw new RuntimeException("로그인 실패");
@@ -68,8 +69,16 @@ public class UserService {
         return userRepository.existsByNickname(nickName);
     }
 
-    public boolean checkEmail(String email){
-        return userRepository.existsByEmail(email);
+    public boolean checkEmail(String email){ return userRepository.existsByEmail(email); }
+
+    public boolean modifyPassword(String token, String newPassword){
+        String userId = jwtTokenProvider.getLoginId(token);
+        User user = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return true;
     }
 
 }
