@@ -81,4 +81,16 @@ public class UserService {
         return true;
     }
 
+    public boolean deleteUser(String token, String password){
+        String userId = jwtTokenProvider.getLoginId(token);
+        User user = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
+
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new RuntimeException("비밀번호 불일치");
+        }
+
+        userRepository.deleteById(user.getId());
+
+        return true;
+    }
 }

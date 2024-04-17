@@ -66,4 +66,13 @@ public class UserController {
                 .body(new ResponseDTO<>(200, true, null, isModify));
     }
 
+
+    @DeleteMapping
+    public ResponseEntity<ResponseDTO> deleteUser(@RequestHeader("Authorization") String token, @RequestParam String password){
+        Boolean isDelete = userService.deleteUser(token, password);
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO<>(200, true, null, isDelete));
+    }
+
 }
