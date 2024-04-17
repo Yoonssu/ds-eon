@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/join")
+    @PostMapping
     public ResponseEntity<ResponseDTO> register(@RequestBody JoinRequestDTO joinRequestDTO) {
         Long userId = userService.signup(joinRequestDTO);
 
@@ -57,4 +57,22 @@ public class UserController {
                 .ok()
                 .body(new ResponseDTO<>(200, true, null, isexist));
     }
+
+    @PatchMapping("/password")
+    public ResponseEntity<ResponseDTO> modifyPassword(@RequestHeader("Authorization") String token, @RequestParam String newPassword){
+        Boolean isModify = userService.modifyPassword(token, newPassword);
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO<>(200, true, null, isModify));
+    }
+
+
+    @DeleteMapping
+    public ResponseEntity<ResponseDTO> deleteUser(@RequestHeader("Authorization") String token, @RequestParam String password){
+        Boolean isDelete = userService.deleteUser(token, password);
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO<>(200, true, null, isDelete));
+    }
+
 }
