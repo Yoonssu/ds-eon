@@ -4,10 +4,14 @@ import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.base.dto.user.JoinRequestDTO;
 import com.aeon.hadog.base.dto.user.LoginRequestDTO;
 import com.aeon.hadog.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @Controller
@@ -18,12 +22,19 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> register(@RequestBody JoinRequestDTO joinRequestDTO) {
+    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody JoinRequestDTO joinRequestDTO, Errors errors) {
+        if (errors.hasErrors()) {
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ResponseDTO<>(400, false, "회원가입 실패", validatorResult));
+        }
+
         Long userId = userService.signup(joinRequestDTO);
 
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, userId));
+                .body(new ResponseDTO<>(200, true, "회원가입 성공", userId));
     }
 
     @PostMapping("/login")
