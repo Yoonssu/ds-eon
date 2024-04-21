@@ -32,4 +32,35 @@ public class PetService {
 
         return pet.getPetId();
     }
+
+    public Long updatePet(Long petId, PetDTO petDTO) {
+
+        Pet pet = petRepository.findById(petId).get();
+
+        pet.setName(petDTO.getName());
+        pet.setBreed(petDTO.getBreed());
+        pet.setSex(petDTO.getSex());
+        pet.setNeuter(petDTO.getNeuter());
+        pet.setImage(petDTO.getImage());
+        pet.setAge(petDTO.getAge());
+
+        petRepository.save(pet);
+
+        return pet.getPetId();
+    }
+
+    public PetDTO viewPet(Long petId) {
+        Pet pet = petRepository.findById(petId).get();
+        PetDTO petDTO = PetDTO.builder()
+                .name(pet.getName())
+                .breed(pet.getBreed())
+                .sex(pet.getSex())
+                .neuter(pet.getNeuter())
+                .image(pet.getImage())
+                .age(pet.getAge())
+                .build();
+
+        return petDTO;
+    }
+
 }
