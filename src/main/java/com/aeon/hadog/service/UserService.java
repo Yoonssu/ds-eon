@@ -1,9 +1,11 @@
 package com.aeon.hadog.service;
 
 
+import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.config.security.JwtTokenProvider;
 import com.aeon.hadog.base.dto.user.JoinRequestDTO;
 import com.aeon.hadog.base.dto.user.LoginRequestDTO;
+import com.aeon.hadog.base.exception.*;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +18,6 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,13 +31,13 @@ public class UserService {
     public Long signup(JoinRequestDTO joinRequestDTO) {
 
         if(userRepository.existsById(joinRequestDTO.getId())){
-            throw new RuntimeException("이미 존재하는 아이디입니다.");
+            throw new DuplicateIdException(ErrorCode.DUPLICATE_ID_REQUEST);
         }
         if(userRepository.existsByNickname(joinRequestDTO.getNickname())){
-            throw new RuntimeException("이미 존재하는 닉네임입니다.");
+            throw new DuplicateNicknameException(ErrorCode.DUPLICATE_NICKNAME_REQUEST);
         }
         if(userRepository.existsByEmail(joinRequestDTO.getEmail())){
-            throw new RuntimeException("이미 존재하는 이메일입니다.");
+            throw new DuplicateEmailException(ErrorCode.DUPLICATE_EMAIL_REQUEST);
         }
 
         User user= User.builder()
@@ -53,10 +54,10 @@ public class UserService {
     }
 
     public String signin(LoginRequestDTO loginRequestDTO){
-        User user = userRepository.findById(loginRequestDTO.getId()).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
+        User user = userRepository.findById(loginRequestDTO.getId()).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         if(!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())){
-            throw new RuntimeException("로그인 실패");
+            throw new InvalidLoginException(ErrorCode.INVALID_LOGIN);
         }
 
         String token = JwtTokenProvider.createToken(user.getId());
@@ -77,7 +78,7 @@ public class UserService {
 
     public boolean modifyPassword(String token, String newPassword){
         String userId = jwtTokenProvider.getLoginId(token);
-        User user = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
@@ -87,10 +88,10 @@ public class UserService {
 
     public boolean deleteUser(String token, String password){
         String userId = jwtTokenProvider.getLoginId(token);
-        User user = userRepository.findById(userId).orElseThrow(()->new IllegalArgumentException("해당하는 유저가 존재하지 않습니다"));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         if(!passwordEncoder.matches(password, user.getPassword())){
-            throw new RuntimeException("비밀번호 불일치");
+            throw new PasswordMismatchException(ErrorCode.PASSWORD_MISMATCH);
         }
 
         userRepository.deleteById(user.getId());
