@@ -46,7 +46,7 @@ class UserServiceTest {
                 .password("minji01@")
                 .nickname("김민지01")
                 .email("minji01@gmail.com")
-                .build(); 
+                .build();
 
         when(userRepository.existsById(joinRequestDTO.getId())).thenReturn(false);
         when(userRepository.existsByNickname(joinRequestDTO.getNickname())).thenReturn(false);

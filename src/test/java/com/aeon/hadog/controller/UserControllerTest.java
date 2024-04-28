@@ -86,6 +86,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("아이디 중복 테스트")
     void checkId() throws Exception {
         // given
         String id = "minsu01";
@@ -101,6 +102,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("닉네임 중복 테스트")
     void checkNickName() throws Exception {
         // given
         String nickName = "김민수01";
@@ -116,6 +118,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("이메일 중복 테스트")
     void checkEmail() throws Exception {
         // given
         String email = "minsu01@gmail.com";
@@ -131,6 +134,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("비밀번호 변경 테스트")
     void modifyPassword() throws Exception {
 //        // given
 //        String id = "minsu01";
@@ -151,6 +155,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("회원 탈퇴 테스트")
     void deleteUser() {
         // given
 
