@@ -42,7 +42,7 @@ public class UserController {
         String token = userService.signin(loginRequestDTO);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, token));
+                .body(new ResponseDTO<>(200, true, "로그인 성공", token));
     }
 
     @GetMapping("/id")
@@ -50,7 +50,7 @@ public class UserController {
         Boolean isexist = userService.checkId(id);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "id값 중복 없음", isexist));
     }
 
     @GetMapping("/nickName")
@@ -58,7 +58,7 @@ public class UserController {
         Boolean isexist = userService.checkNickName(nickName);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "닉네임 중복 없음", isexist));
     }
 
     @GetMapping("/email")
@@ -66,7 +66,7 @@ public class UserController {
         Boolean isexist = userService.checkEmail(email);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "email 중복 없음", isexist));
     }
 
     @PatchMapping("/password")
@@ -74,7 +74,7 @@ public class UserController {
         Boolean isModify = userService.modifyPassword(token, newPassword);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isModify));
+                .body(new ResponseDTO<>(200, true, "패스워드 변경 완료", isModify));
     }
 
 
@@ -83,7 +83,7 @@ public class UserController {
         Boolean isDelete = userService.deleteUser(token, password);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isDelete));
+                .body(new ResponseDTO<>(200, true, "회원 탈퇴 완료", isDelete));
     }
 
 }
