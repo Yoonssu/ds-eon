@@ -50,7 +50,7 @@ public class UserController {
         Boolean isexist = userService.checkId(id);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, "id값 중복 없음", isexist));
+                .body(new ResponseDTO<>(200, true, "id값 중복 확인", isexist));
     }
 
     @GetMapping("/nickName")
@@ -58,7 +58,7 @@ public class UserController {
         Boolean isexist = userService.checkNickName(nickName);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, "닉네임 중복 없음", isexist));
+                .body(new ResponseDTO<>(200, true, "닉네임 중복 확인", isexist));
     }
 
     @GetMapping("/email")
@@ -66,7 +66,7 @@ public class UserController {
         Boolean isexist = userService.checkEmail(email);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, "email 중복 없음", isexist));
+                .body(new ResponseDTO<>(200, true, "email 중복 확인", isexist));
     }
 
     @PatchMapping("/password")
