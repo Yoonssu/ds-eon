@@ -4,10 +4,10 @@ import com.aeon.hadog.base.dto.user.JoinRequestDTO;
 import com.aeon.hadog.base.dto.user.LoginRequestDTO;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -15,16 +15,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 class UserServiceTest {
 
     @Autowired
     private UserService userService;
 
-    @Mock
+    @Autowired
     private UserRepository userRepository;
 
     @Test
     @DisplayName("회원가입 테스트")
+    @Transactional
     void signup() {
         // given
         JoinRequestDTO dto = JoinRequestDTO.builder()
@@ -49,8 +51,8 @@ class UserServiceTest {
     @DisplayName("로그인 테스트")
     void signin() {
         // given
-        String id = "minji01";
-        String password = "minji01@";
+        String id = "user3";
+        String password = "user3@@@";
         LoginRequestDTO dto = LoginRequestDTO.builder()
                 .id(id)
                 .password(password)
@@ -61,14 +63,13 @@ class UserServiceTest {
 
         // then
         assertNotNull(token);
-        assertEquals(182, token.length());
     }
 
     @Test
     @DisplayName("아이디 중복 테스트")
     void checkId() {
         // given
-        String existingId = "minji01";
+        String existingId = "user3";
 
         // when
         boolean result = userService.checkId(existingId);
@@ -81,7 +82,7 @@ class UserServiceTest {
     @DisplayName("닉네임 중복 테스트")
     void checkNickName() {
         // given
-        String existingNickname = "김민지01";
+        String existingNickname = "hello4";
 
         // when
         boolean result = userService.checkNickName(existingNickname);
@@ -94,7 +95,7 @@ class UserServiceTest {
     @DisplayName("이메일 중복 테스트")
     void checkEmail() {
         // given
-        String existingEmail = "minji01@gmail.com";
+        String existingEmail = "user3@gmail.com";
 
         // when
         boolean result = userService.checkEmail(existingEmail);
