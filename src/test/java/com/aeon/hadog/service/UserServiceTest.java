@@ -30,11 +30,11 @@ class UserServiceTest {
     void signup() {
         // given
         JoinRequestDTO dto = JoinRequestDTO.builder()
-                .name("김민지")
-                .id("minji01")
-                .password("minji01@")
-                .nickname("김민지01")
-                .email("minji01@gmail.com")
+                .name("홍길동")
+                .id("user01")
+                .password("user012@")
+                .nickname("길동이01")
+                .email("user01@gmail.com")
                 .build();
 
         // when
@@ -52,7 +52,7 @@ class UserServiceTest {
     void signin() {
         // given
         String id = "user3";
-        String password = "user3@@@";
+        String password = "user333!";
         LoginRequestDTO dto = LoginRequestDTO.builder()
                 .id(id)
                 .password(password)
@@ -108,19 +108,28 @@ class UserServiceTest {
     @DisplayName("비밀번호 변경 테스트")
     void modifyPassword() {
         // given
+        String id = "user3";
+        String prevPassword = "user333!";
+        String newPassword = "user333@";
 
         // when
+        boolean result = userService.modifyPassword(id, prevPassword, newPassword);
 
         // then
+        assertTrue(result);
     }
 
     @Test
     @DisplayName("회원 탈퇴 테스트")
     void deleteUser() {
         // given
+        String id = "user3";
+        String password = "user333!";
 
         // when
+        boolean result = userService.deleteUser(id, password);
 
         // then
+        assertTrue(result);
     }
 }

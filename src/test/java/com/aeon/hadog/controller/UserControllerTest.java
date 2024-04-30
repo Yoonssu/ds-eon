@@ -31,29 +31,16 @@ class UserControllerTest {
     @Mock
     UserService userService;
 
-    @BeforeEach
-    void setUp(){
-        JoinRequestDTO dto = JoinRequestDTO.builder()
-                .name("김민수")
-                .id("minsu01")
-                .password("minsu01@")
-                .nickname("김민수01")
-                .email("minsu01@gmail.com")
-                .build();
-
-        userService.signup(dto);
-    }
-
     @Test
     @DisplayName("회원가입 테스트")
     void register() throws Exception {
         // given
         JoinRequestDTO dto = JoinRequestDTO.builder()
-                .name("김민지")
-                .id("minji01")
-                .password("minji01@")
-                .nickname("김민지01")
-                .email("minji01@gmail.com")
+                .name("홍길동")
+                .id("user01")
+                .password("user012@")
+                .nickname("길동이01")
+                .email("user01@gmail.com")
                 .build();
 
         String json = new ObjectMapper().writeValueAsString(dto);
@@ -74,7 +61,7 @@ class UserControllerTest {
         // given
         LoginRequestDTO dto = LoginRequestDTO.builder()
                 .id("user3")
-                .password("user3@@@")
+                .password("user333!")
                 .build();
 
         String json = new ObjectMapper().writeValueAsString(dto);
@@ -142,14 +129,15 @@ class UserControllerTest {
     @DisplayName("비밀번호 변경 테스트")
     void modifyPassword() throws Exception {
 //        // given
-//        String id = "minsu01";
-//        String password = "minsu01@";
-//        String newPassword = "minsu1234@";
+//        String id = "user3";
+//        String password = "user333!";
+//        String newPassword = "user333@";
 //
 //        // when
 //        ResultActions resultActions = mockMvc.perform(patch("/user/password")
-//                .header("Authorization", "Bearer " + token)
+//                .header("Authorization", id)
 //                .contentType(MediaType.APPLICATION_JSON)
+//                .param("prevPassword", password)
 //                .param("newPassword", newPassword));
 //
 //        // then
