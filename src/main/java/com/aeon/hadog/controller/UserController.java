@@ -71,8 +71,8 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<ResponseDTO> modifyPassword(@AuthenticationPrincipal String userId, @RequestParam String newPassword){
-        Boolean isModify = userService.modifyPassword(userId, newPassword);
+    public ResponseEntity<ResponseDTO> modifyPassword(@AuthenticationPrincipal String userId, @RequestParam String prevPassword,  @RequestParam String newPassword){
+        Boolean isModify = userService.modifyPassword(userId, prevPassword, newPassword);
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO<>(200, true, "패스워드 변경 완료", isModify));
