@@ -3,6 +3,7 @@ package com.aeon.hadog.controller;
 import com.aeon.hadog.base.dto.user.JoinRequestDTO;
 import com.aeon.hadog.base.dto.user.LoginRequestDTO;
 import com.aeon.hadog.service.UserService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -128,32 +129,69 @@ class UserControllerTest {
     @Test
     @DisplayName("비밀번호 변경 테스트")
     void modifyPassword() throws Exception {
-//        // given
-//        String id = "user3";
-//        String password = "user333!";
-//        String newPassword = "user333@";
-//
-//        // when
-//        ResultActions resultActions = mockMvc.perform(patch("/user/password")
-//                .header("Authorization", id)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .param("prevPassword", password)
-//                .param("newPassword", newPassword));
-//
-//        // then
-//        resultActions.andExpect(status().isOk())
-//                .andExpect(jsonPath("$.status").value(200))
-//                .andExpect(jsonPath("$.data").value(true))
-//                .andExpect(jsonPath("$.message").value("패스워드 변경 완료"));
+        // given
+        String id = "user3";
+        String password = "user333!";
+        String newPassword = "user333@";
+
+        LoginRequestDTO loginDto = new LoginRequestDTO(id, password);
+        String token = loginUserAndGetToken(loginDto);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch("/user/password")
+                .header("Authorization",  "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("prevPassword", password)
+                .param("newPassword", newPassword));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.data").value(true))
+                .andExpect(jsonPath("$.message").value("패스워드 변경 완료"));
     }
 
     @Test
     @DisplayName("회원 탈퇴 테스트")
-    void deleteUser() {
+    void deleteUser() throws Exception {
         // given
+        String id = "user3";
+        String password = "user333!";
+
+        LoginRequestDTO loginDto = new LoginRequestDTO(id, password);
+        String token = loginUserAndGetToken(loginDto);
+
 
         // when
+        ResultActions resultActions = mockMvc.perform(delete("/user")
+                .header("Authorization",  "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("password", password));
+
 
         // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.data").value(true))
+                .andExpect(jsonPath("$.message").value("회원 탈퇴 완료"));
+    }
+
+    private String loginUserAndGetToken(LoginRequestDTO loginDto) throws Exception {
+        String json = new ObjectMapper().writeValueAsString(loginDto);
+
+        String response = mockMvc.perform(post("/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        // 응답에서 토큰 추출
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(response);
+        String token = jsonNode.get("data").asText();
+
+        return token;
     }
 }
