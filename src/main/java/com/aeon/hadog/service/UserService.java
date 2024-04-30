@@ -76,8 +76,7 @@ public class UserService {
 
     public boolean checkEmail(String email){ return userRepository.existsByEmail(email); }
 
-    public boolean modifyPassword(String token, String newPassword){
-        String userId = jwtTokenProvider.getLoginId(token);
+    public boolean modifyPassword(String userId, String newPassword){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -86,8 +85,7 @@ public class UserService {
         return true;
     }
 
-    public boolean deleteUser(String token, String password){
-        String userId = jwtTokenProvider.getLoginId(token);
+    public boolean deleteUser(String userId, String password){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         if(!passwordEncoder.matches(password, user.getPassword())){

@@ -7,6 +7,7 @@ import com.aeon.hadog.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -70,8 +71,8 @@ public class UserController {
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<ResponseDTO> modifyPassword(@RequestHeader("Authorization") String token, @RequestParam String newPassword){
-        Boolean isModify = userService.modifyPassword(token, newPassword);
+    public ResponseEntity<ResponseDTO> modifyPassword(@AuthenticationPrincipal String userId, @RequestParam String newPassword){
+        Boolean isModify = userService.modifyPassword(userId, newPassword);
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO<>(200, true, "패스워드 변경 완료", isModify));
@@ -79,8 +80,8 @@ public class UserController {
 
 
     @DeleteMapping
-    public ResponseEntity<ResponseDTO> deleteUser(@RequestHeader("Authorization") String token, @RequestParam String password){
-        Boolean isDelete = userService.deleteUser(token, password);
+    public ResponseEntity<ResponseDTO> deleteUser(@AuthenticationPrincipal String userId, @RequestParam String password){
+        Boolean isDelete = userService.deleteUser(userId, password);
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO<>(200, true, "회원 탈퇴 완료", isDelete));
