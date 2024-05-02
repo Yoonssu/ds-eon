@@ -50,6 +50,22 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.PASSWORD_MISMATCH));
     }
 
+    @ExceptionHandler(PasswordFormatInvalidException.class)
+    protected ResponseEntity<ErrorResponseDTO> PasswordFormatInvalidException(final PasswordFormatInvalidException e) {
+        log.error("PasswordFormatInvalidException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.PASSWORD_FORMAT_INVALID.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.PASSWORD_FORMAT_INVALID));
+    }
+
+    @ExceptionHandler(NewPasswordSameAsOldException.class)
+    protected ResponseEntity<ErrorResponseDTO> NewPasswordSameAsOldException(final NewPasswordSameAsOldException e) {
+        log.error("NewPasswordSameAsOldException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.NEW_PASSWORD_SAME_AS_OLD.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.NEW_PASSWORD_SAME_AS_OLD));
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> UserNotFoundException(final UserNotFoundException e) {
         log.error("UserNotFoundException : {}", e.getMessage());

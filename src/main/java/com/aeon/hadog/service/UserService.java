@@ -18,6 +18,8 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -76,9 +78,24 @@ public class UserService {
 
     public boolean checkEmail(String email){ return userRepository.existsByEmail(email); }
 
-    public boolean modifyPassword(String token, String newPassword){
-        String userId = jwtTokenProvider.getLoginId(token);
+    public boolean modifyPassword(String userId, String prevPassword, String newPassword){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(prevPassword, user.getPassword())) {
+            throw new PasswordMismatchException(ErrorCode.PASSWORD_MISMATCH);
+        }
+
+        String passwordRegex = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher = pattern.matcher(newPassword);
+
+        if (!matcher.matches()) {
+            throw new PasswordFormatInvalidException(ErrorCode.PASSWORD_FORMAT_INVALID);
+        }
+
+        if (passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new NewPasswordSameAsOldException(ErrorCode.NEW_PASSWORD_SAME_AS_OLD);
+        }
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
@@ -86,8 +103,7 @@ public class UserService {
         return true;
     }
 
-    public boolean deleteUser(String token, String password){
-        String userId = jwtTokenProvider.getLoginId(token);
+    public boolean deleteUser(String userId, String password){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
         if(!passwordEncoder.matches(password, user.getPassword())){

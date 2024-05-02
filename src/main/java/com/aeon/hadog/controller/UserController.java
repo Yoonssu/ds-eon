@@ -7,6 +7,7 @@ import com.aeon.hadog.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class UserController {
         String token = userService.signin(loginRequestDTO);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, token));
+                .body(new ResponseDTO<>(200, true, "로그인 성공", token));
     }
 
     @GetMapping("/id")
@@ -50,7 +51,7 @@ public class UserController {
         Boolean isexist = userService.checkId(id);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "id값 중복 확인", isexist));
     }
 
     @GetMapping("/nickName")
@@ -58,7 +59,7 @@ public class UserController {
         Boolean isexist = userService.checkNickName(nickName);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "닉네임 중복 확인", isexist));
     }
 
     @GetMapping("/email")
@@ -66,24 +67,24 @@ public class UserController {
         Boolean isexist = userService.checkEmail(email);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isexist));
+                .body(new ResponseDTO<>(200, true, "email 중복 확인", isexist));
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<ResponseDTO> modifyPassword(@RequestHeader("Authorization") String token, @RequestParam String newPassword){
-        Boolean isModify = userService.modifyPassword(token, newPassword);
+    public ResponseEntity<ResponseDTO> modifyPassword(@AuthenticationPrincipal String userId, @RequestParam String prevPassword,  @RequestParam String newPassword){
+        Boolean isModify = userService.modifyPassword(userId, prevPassword, newPassword);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isModify));
+                .body(new ResponseDTO<>(200, true, "패스워드 변경 완료", isModify));
     }
 
 
     @DeleteMapping
-    public ResponseEntity<ResponseDTO> deleteUser(@RequestHeader("Authorization") String token, @RequestParam String password){
-        Boolean isDelete = userService.deleteUser(token, password);
+    public ResponseEntity<ResponseDTO> deleteUser(@AuthenticationPrincipal String userId, @RequestParam String password){
+        Boolean isDelete = userService.deleteUser(userId, password);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, null, isDelete));
+                .body(new ResponseDTO<>(200, true, "회원 탈퇴 완료", isDelete));
     }
 
 }

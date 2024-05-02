@@ -18,11 +18,11 @@ public class Emotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long emotionId;
     @Column(nullable=false)
-    private String emtion;
+    private String emotion;
 
     @Column(nullable=false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable=false)
+    @Column(nullable=false, columnDefinition = "TEXT")
     private String image;
 }
