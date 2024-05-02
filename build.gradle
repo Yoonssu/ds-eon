@@ -41,6 +41,8 @@ dependencies {
 
 	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
 
+	// Spring Cloud Starter AWS
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 
