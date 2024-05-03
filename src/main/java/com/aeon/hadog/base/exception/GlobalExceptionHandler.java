@@ -74,6 +74,14 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.BLANK_CONTENT_ERROR));
     }
 
+    @ExceptionHandler(EmotionTrackNotBelongToUserException.class)
+    protected ResponseEntity<ErrorResponseDTO> EmotionTrackNotBelongToUserException(final EmotionTrackNotBelongToUserException e) {
+        log.error("EmotionTrackNotBelongToUserException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR));
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> UserNotFoundException(final UserNotFoundException e) {
         log.error("UserNotFoundException : {}", e.getMessage());
@@ -88,5 +96,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(ErrorCode.DIARY_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.DIARY_NOT_FOUND));
+    }
+
+    @ExceptionHandler(EmotionTrackNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> EmotionTrackNotFoundException(final EmotionTrackNotFoundException e) {
+        log.error("EmotionTrackNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.EMOTIONTRACK_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.EMOTIONTRACK_NOT_FOUND));
     }
 }

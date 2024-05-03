@@ -2,14 +2,14 @@ package com.aeon.hadog.service;
 
 import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.diary.DiaryDTO;
-import com.aeon.hadog.base.exception.BlanckContentException;
-import com.aeon.hadog.base.exception.DiaryNotFoundException;
-import com.aeon.hadog.base.exception.UserNotFoundException;
+import com.aeon.hadog.base.exception.*;
 import com.aeon.hadog.domain.Diary;
 import com.aeon.hadog.domain.EmotionTrack;
+import com.aeon.hadog.domain.Pet;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.DiaryRepository;
 import com.aeon.hadog.repository.EmotionTrackRepository;
+import com.aeon.hadog.repository.PetRepository;
 import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -31,11 +32,17 @@ public class DiaryService {
 
     private final EmotionTrackRepository emotionTrackRepository;
 
+    private final PetRepository petRepository;
+
     public Long createDiary(String userId, DiaryDTO diaryDTO){
 
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
+        EmotionTrack emotionTrack = emotionTrackRepository.findByEmotionTrackId(diaryDTO.getEmotionTrackId()).orElseThrow(()->new EmotionTrackNotFoundException(ErrorCode.EMOTIONTRACK_NOT_FOUND));
+        Pet pet = petRepository.findByPetId(emotionTrack.getPetId()).orElseThrow();
 
-        EmotionTrack emotionTrack = emotionTrackRepository.findByEmotionTrackId(diaryDTO.getEmotionTrackId()).orElseThrow();
+        if (!Objects.equals(user, pet.getUser())) {
+            throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
+        }
 
         Diary diary = Diary.builder()
                 .emotionTrack(emotionTrack)
@@ -51,6 +58,11 @@ public class DiaryService {
     public DiaryDTO getDiary(String userId, Long diaryId){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
         Diary diary = diaryRepository.findByDiaryId(diaryId).orElseThrow(()->new DiaryNotFoundException(ErrorCode.DIARY_NOT_FOUND));
+        Pet pet = petRepository.findByPetId(diary.getEmotionTrack().getPetId()).orElseThrow();
+
+        if (!Objects.equals(user, pet.getUser())) {
+            throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
+        }
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .emotionTrackId(diary.getEmotionTrack().getEmotionTrackId())
@@ -64,6 +76,11 @@ public class DiaryService {
     public DiaryDTO modifyDiary(String userId, Long diaryId, String content){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
         Diary diary = diaryRepository.findByDiaryId(diaryId).orElseThrow(()->new DiaryNotFoundException(ErrorCode.DIARY_NOT_FOUND));
+        Pet pet = petRepository.findByPetId(diary.getEmotionTrack().getPetId()).orElseThrow();
+
+        if (!Objects.equals(user, pet.getUser())) {
+            throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
+        }
 
         if (content == null || content.trim().isEmpty()) {
             throw new BlanckContentException(ErrorCode.BLANK_CONTENT_ERROR);
