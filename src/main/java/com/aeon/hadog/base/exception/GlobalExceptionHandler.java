@@ -66,6 +66,14 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.NEW_PASSWORD_SAME_AS_OLD));
     }
 
+    @ExceptionHandler(BlanckContentException.class)
+    protected ResponseEntity<ErrorResponseDTO> BlanckContentException(final BlanckContentException e) {
+        log.error("BlanckContentException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.BLANK_CONTENT_ERROR.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.BLANK_CONTENT_ERROR));
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> UserNotFoundException(final UserNotFoundException e) {
         log.error("UserNotFoundException : {}", e.getMessage());
