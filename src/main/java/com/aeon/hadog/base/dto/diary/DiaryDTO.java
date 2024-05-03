@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class DiaryDTO {
-    @NotBlank(message = "감정은 필수입니다.")
-    private EmotionTrack emotionTrack;
+    @NotNull
+    private Long emotionTrackId;
 
-    @NotBlank(message = "날짜은 필수입니다.")
+    @NotNull
     private LocalDateTime diaryDate;
 
     @NotBlank(message = "내용은 필수 입력 값입니다.")

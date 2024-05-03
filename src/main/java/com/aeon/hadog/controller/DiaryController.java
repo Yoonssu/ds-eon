@@ -19,7 +19,7 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> uploadDiary(@AuthenticationPrincipal String userId, @Valid  @RequestBody DiaryDTO diaryDTO){
+    public ResponseEntity<ResponseDTO> uploadDiary(@AuthenticationPrincipal String userId, @Valid @RequestBody DiaryDTO diaryDTO){
         Long diaryId = diaryService.createDiary(userId, diaryDTO);
         return ResponseEntity
                 .ok()

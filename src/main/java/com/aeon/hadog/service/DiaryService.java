@@ -6,8 +6,10 @@ import com.aeon.hadog.base.exception.BlanckContentException;
 import com.aeon.hadog.base.exception.DiaryNotFoundException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.Diary;
+import com.aeon.hadog.domain.EmotionTrack;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.DiaryRepository;
+import com.aeon.hadog.repository.EmotionTrackRepository;
 import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +25,20 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DiaryService {
 
-    private DiaryRepository diaryRepository;
+    private final DiaryRepository diaryRepository;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final EmotionTrackRepository emotionTrackRepository;
 
     public Long createDiary(String userId, DiaryDTO diaryDTO){
 
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
 
+        EmotionTrack emotionTrack = emotionTrackRepository.findByEmotionTrackId(diaryDTO.getEmotionTrackId()).orElseThrow();
+
         Diary diary = Diary.builder()
-                .emotionTrack(diaryDTO.getEmotionTrack())
+                .emotionTrack(emotionTrack)
                 .diaryDate(diaryDTO.getDiaryDate())
                 .content(diaryDTO.getContent())
                 .build();
@@ -47,7 +53,7 @@ public class DiaryService {
         Diary diary = diaryRepository.findByDiaryId(diaryId).orElseThrow(()->new DiaryNotFoundException(ErrorCode.DIARY_NOT_FOUND));
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .emotionTrack(diary.getEmotionTrack())
+                .emotionTrackId(diary.getEmotionTrack().getEmotionTrackId())
                 .diaryDate(diary.getDiaryDate())
                 .content(diary.getContent())
                 .build();
@@ -67,7 +73,7 @@ public class DiaryService {
         diaryRepository.save(diary);
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .emotionTrack(diary.getEmotionTrack())
+                .emotionTrackId(diary.getEmotionTrack().getEmotionTrackId())
                 .diaryDate(diary.getDiaryDate())
                 .content(diary.getContent())
                 .build();
