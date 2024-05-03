@@ -33,7 +33,7 @@ public class AmazonS3Service {
         metadata.setContentLength(file.getSize());
         metadata.addUserMetadata("originfilename", URLEncoder.encode(originfileName, StandardCharsets.UTF_8));
         PutObjectResult result = amazonS3Client.putObject(bucketName, filePath, file.getInputStream(), metadata);
-        return filePath;
+        return "https://hadog.s3.ap-northeast-2.amazonaws.com/"+filePath;
     }
 
 }
