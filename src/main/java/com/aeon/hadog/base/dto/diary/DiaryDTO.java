@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UploadDiaryDTO {
+public class DiaryDTO {
     private EmotionTrack emotionTrack;
     private LocalDateTime diaryDate;
     private String content;

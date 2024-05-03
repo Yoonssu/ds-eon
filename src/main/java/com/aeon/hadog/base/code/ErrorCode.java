@@ -25,7 +25,8 @@ public enum ErrorCode {
             /*
      * 404 NOT_FOUND : 잘못된 리소스 접근
      */
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 유저가 존재하지 않습니다");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 유저가 존재하지 않습니다"),
+    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 일기가 존재하지 않습니다");
 
 
     /*
