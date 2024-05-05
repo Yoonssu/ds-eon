@@ -1,6 +1,6 @@
 package com.aeon.hadog.controller;
 
-import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.dto.user.JoinRequestDTO;
 import com.aeon.hadog.base.dto.user.LoginRequestDTO;
 import com.aeon.hadog.service.PetService;
@@ -13,12 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;

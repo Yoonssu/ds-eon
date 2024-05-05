@@ -1,16 +1,13 @@
 package com.aeon.hadog.controller;
 
-import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
-import com.aeon.hadog.domain.Pet;
 import com.aeon.hadog.service.AmazonS3Service;
 import com.aeon.hadog.service.PetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +44,7 @@ public class PetController {
     }
 
     @PutMapping("/update/{petId}")
-    public ResponseEntity<ResponseDTO> update(@PathVariable Long petId, @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseDTO> update(@AuthenticationPrincipal String userId, @PathVariable Long petId, @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
 
         try {
             // s3에 반려견 이미지 업로드
@@ -68,7 +65,7 @@ public class PetController {
     }
 
     @GetMapping("/info/{petId}")
-    public ResponseEntity<ResponseDTO> update(@PathVariable Long petId) {
+    public ResponseEntity<ResponseDTO> info(@AuthenticationPrincipal String userId, @PathVariable Long petId) {
 
         try {
             PetDTO petDTO = petService.viewPet(petId);

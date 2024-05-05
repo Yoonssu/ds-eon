@@ -1,12 +1,14 @@
 package com.aeon.hadog.service;
 
-import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.domain.Pet;
 import com.aeon.hadog.repository.PetRepository;
 import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,32 +37,47 @@ public class PetService {
 
     public Long updatePet(Long petId, PetDTO petDTO) {
 
-        Pet pet = petRepository.findById(petId).get();
+        Optional<Pet> optionalPet = petRepository.findById(petId);
 
-        pet.setName(petDTO.getName());
-        pet.setBreed(petDTO.getBreed());
-        pet.setSex(petDTO.getSex());
-        pet.setNeuter(petDTO.getNeuter());
-        pet.setImage(petDTO.getImage());
-        pet.setAge(petDTO.getAge());
+        if (optionalPet.isPresent()) {
+            Pet pet = optionalPet.get();
 
-        petRepository.save(pet);
+            pet.setName(petDTO.getName());
+            pet.setBreed(petDTO.getBreed());
+            pet.setSex(petDTO.getSex());
+            pet.setNeuter(petDTO.getNeuter());
+            pet.setImage(petDTO.getImage());
+            pet.setAge(petDTO.getAge());
 
-        return pet.getPetId();
+            petRepository.save(pet);
+
+            return pet.getPetId();
+
+        } else {
+            throw new IllegalArgumentException("해당 ID로 Pet을 찾을 수 없습니다.");
+        }
+
     }
 
     public PetDTO viewPet(Long petId) {
-        Pet pet = petRepository.findById(petId).get();
-        PetDTO petDTO = PetDTO.builder()
-                .name(pet.getName())
-                .breed(pet.getBreed())
-                .sex(pet.getSex())
-                .neuter(pet.getNeuter())
-                .image(pet.getImage())
-                .age(pet.getAge())
-                .build();
+        Optional<Pet> optionalPet = petRepository.findById(petId);
 
-        return petDTO;
+        if (optionalPet.isPresent()) {
+            Pet pet = optionalPet.get();
+            PetDTO petDTO = PetDTO.builder()
+                    .name(pet.getName())
+                    .breed(pet.getBreed())
+                    .sex(pet.getSex())
+                    .neuter(pet.getNeuter())
+                    .image(pet.getImage())
+                    .age(pet.getAge())
+                    .build();
+
+            return petDTO;
+        } else {
+            throw new IllegalArgumentException("해당 ID로 Pet을 찾을 수 없습니다.");
+        }
+
     }
 
 }
