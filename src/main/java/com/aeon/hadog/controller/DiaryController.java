@@ -5,10 +5,14 @@ import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.service.DiaryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @Controller
@@ -40,5 +44,13 @@ public class DiaryController {
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO<>(200, true, "일기 수정 완료", result));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<ResponseDTO> getDiarys(@AuthenticationPrincipal String userId, @RequestParam LocalDateTime date){
+        List<DiaryDTO> result = diaryService.getDiarys(userId, date);
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO<>(200, true, "일기 목록 반환 완료", result));
     }
 }
