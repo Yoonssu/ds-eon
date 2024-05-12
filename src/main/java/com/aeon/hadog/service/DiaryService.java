@@ -46,6 +46,7 @@ public class DiaryService {
 
         Diary diary = Diary.builder()
                 .emotionTrack(emotionTrack)
+                .userId(user.getUserId())
                 .diaryDate(diaryDTO.getDiaryDate())
                 .content(diaryDTO.getContent())
                 .build();
@@ -58,9 +59,8 @@ public class DiaryService {
     public DiaryDTO getDiary(String userId, Long diaryId){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
         Diary diary = diaryRepository.findByDiaryId(diaryId).orElseThrow(()->new DiaryNotFoundException(ErrorCode.DIARY_NOT_FOUND));
-        Pet pet = petRepository.findByPetId(diary.getEmotionTrack().getPetId()).orElseThrow();
 
-        if (!Objects.equals(user, pet.getUser())) {
+        if (!Objects.equals(user.getUserId(), diary.getUserId())) {
             throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
         }
 
@@ -76,9 +76,8 @@ public class DiaryService {
     public DiaryDTO modifyDiary(String userId, Long diaryId, String content){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
         Diary diary = diaryRepository.findByDiaryId(diaryId).orElseThrow(()->new DiaryNotFoundException(ErrorCode.DIARY_NOT_FOUND));
-        Pet pet = petRepository.findByPetId(diary.getEmotionTrack().getPetId()).orElseThrow();
 
-        if (!Objects.equals(user, pet.getUser())) {
+        if (!Objects.equals(user.getUserId(), diary.getUserId())) {
             throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
         }
 
