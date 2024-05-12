@@ -73,4 +73,23 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.USER_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.USER_NOT_FOUND));
     }
+
+    @ExceptionHandler(PetNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> PetNotFoundException(final PetNotFoundException e) {
+        log.error("PetNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.PET_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.PET_NOT_FOUND));
+    }
+
+    @ExceptionHandler(NicknameAlreadyExistsException.class)
+    protected ResponseEntity<ErrorResponseDTO> NicknameAlreadyExistsException(final NicknameAlreadyExistsException e) {
+        log.error("NicknameAlreadyExistsException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.NICKNAME_ALREADY_EXISTS_EXCEPTION.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.NICKNAME_ALREADY_EXISTS_EXCEPTION));
+    }
+
+
+
 }
