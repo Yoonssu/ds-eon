@@ -5,6 +5,8 @@ import com.aeon.hadog.base.dto.shelter.ListShelterPostDTO;
 import com.aeon.hadog.base.dto.shelter.ShelterPostDTO;
 import com.aeon.hadog.base.exception.ShelterPostNotFoundException;
 import com.aeon.hadog.domain.ShelterPost;
+import com.aeon.hadog.domain.ShelterPostImages;
+import com.aeon.hadog.repository.ShelterPostImagesRepository;
 import com.aeon.hadog.repository.ShelterPostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.List;
 public class ShelterPostService {
 
     private final ShelterPostRepository shelterPostRepository;
+    private final ShelterPostImagesRepository shelterPostImagesRepository;
 
     public Long uploadPost(ShelterPostDTO shelterPostDTO){
         ShelterPost post = ShelterPost.builder()
@@ -44,14 +47,30 @@ public class ShelterPostService {
 
         shelterPostRepository.save(post);
 
+        for (String imageUrl : shelterPostDTO.getImageUrls()) {
+            ShelterPostImages image = new ShelterPostImages();
+            image.setImageUrl(imageUrl);
+            image.setShelterPost(post);
+
+            shelterPostImagesRepository.save(image);
+        }
+
         return post.getShelterPostId();
     }
 
-    public ShelterPostDTO getPost(Long postId){
+    public ShelterPostDTO getPostDetail(Long postId){
         ShelterPost post = shelterPostRepository.findByShelterPostId(postId).orElseThrow(()->new ShelterPostNotFoundException(ErrorCode.SHELTER_POST_NOT_FOUND));
+
+        List<ShelterPostImages> shelterPostImages = shelterPostImagesRepository.findByShelterPost(post);
+
+        List<String> images = new ArrayList<>();
+        for (int i=0; i<shelterPostImages.size(); i++) {
+            images.add(shelterPostImages.get(i).getImageUrl());
+        }
 
         ShelterPostDTO dto = ShelterPostDTO.builder()
                 .title(post.getTitle())
+                .imageUrls(images)
                 .content(post.getContent())
                 .startDate(post.getStartDate())
                 .endDate(post.getEndDate())
@@ -83,6 +102,7 @@ public class ShelterPostService {
         dto.setTitle(shelterPost.getTitle());
         dto.setSex(shelterPost.getSex());
         dto.setAge(shelterPost.getAge());
+        dto.setThumbnail(shelterPostImagesRepository.findFirstByShelterPostOrderByShelterPostImagesIdAsc(shelterPost).getImageUrl());
         return dto;
     }
 }

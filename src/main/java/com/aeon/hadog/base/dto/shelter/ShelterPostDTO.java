@@ -1,8 +1,10 @@
 package com.aeon.hadog.base.dto.shelter;
 
 import lombok.*;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 public class ShelterPostDTO {
 
     private String title;
+
+    private List<String> imageUrls;
 
     private String content;
 

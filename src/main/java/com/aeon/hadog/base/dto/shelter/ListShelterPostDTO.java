@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 public class ListShelterPostDTO {
     private String title;
+    private String thumbnail;
 
     private String sex;
 
