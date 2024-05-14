@@ -30,8 +30,9 @@ public enum ErrorCode {
      */
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 유저가 존재하지 않습니다"),
     EMOTIONTRACK_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 감정 분석 결과가 존재하지 않습니다"),
-    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 일기가 존재하지 않습니다");
+    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 일기가 존재하지 않습니다"),
 
+    SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다");
 
     /*
      * 500 INTERNAL SERVER ERROR : 서버 에러
