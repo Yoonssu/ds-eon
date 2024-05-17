@@ -4,6 +4,7 @@ import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.service.AmazonS3Service;
 import com.aeon.hadog.service.PetService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +24,7 @@ public class PetController {
     private final AmazonS3Service amazonS3Service;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(@AuthenticationPrincipal String userId, @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseDTO> register(@AuthenticationPrincipal String userId, @Valid @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
 
         try {
 
@@ -44,7 +45,7 @@ public class PetController {
     }
 
     @PutMapping("/update/{petId}")
-    public ResponseEntity<ResponseDTO> update(@AuthenticationPrincipal String userId, @PathVariable Long petId, @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseDTO> update(@AuthenticationPrincipal String userId, @PathVariable Long petId, @Valid @RequestPart(value = "pet") PetDTO petDTO, @RequestPart(required = false) MultipartFile file) throws IOException {
 
         try {
             // s3에 반려견 이미지 업로드
