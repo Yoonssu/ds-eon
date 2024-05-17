@@ -23,6 +23,9 @@ public class Diary {
     @JoinColumn(name = "emotion_track_id", nullable = false)
     private EmotionTrack emotionTrack;
 
+    @Column(nullable = false)
+    private Long userId;
+
     @Column(nullable=false)
     private LocalDateTime diaryDate;
 
