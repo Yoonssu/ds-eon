@@ -53,7 +53,7 @@ class PetServiceTest {
         userService.signin(loginUser);
 
         //given
-        PetDTO petDTO = new PetDTO("보리", "푸들", true, true, null, 3);
+        PetDTO petDTO = new PetDTO("보리", "푸들", "M", true, null, 3);
 
         //when
         Long petId = petService.registerPet(loginUser.getId(), petDTO);
@@ -68,7 +68,7 @@ class PetServiceTest {
     void updatePet() {
         //given
         Long petId = petRepository.findById(1L).get().getPetId();
-        PetDTO petDTO = new PetDTO("율무", "푸들", true, true, null, 3);
+        PetDTO petDTO = new PetDTO("율무", "푸들", "M", true, null, 3);
 
         //when
         petService.updatePet(petId, petDTO);
