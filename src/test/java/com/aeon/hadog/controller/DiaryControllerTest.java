@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,7 +57,10 @@ class DiaryControllerTest {
                 .content(json));
 
         // then
-        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.message").value("일기 작성 완료"));
     }
 
     @Test
@@ -68,6 +72,17 @@ class DiaryControllerTest {
 
         LoginRequestDTO loginDto = new LoginRequestDTO(id, password);
         String token = loginUserAndGetToken(loginDto);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/diary")
+                .header("Authorization",  "Bearer " + token)
+                .param("diaryId", String.valueOf(3L)));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.message").value("일기 상세 불러오기 완료"));
     }
 
     @Test
@@ -79,6 +94,19 @@ class DiaryControllerTest {
 
         LoginRequestDTO loginDto = new LoginRequestDTO(id, password);
         String token = loginUserAndGetToken(loginDto);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(patch("/diary")
+                .header("Authorization",  "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("diaryId", String.valueOf(3L))
+                .param("content", "강아지가 졸려보인다"));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.message").value("일기 수정 완료"));
     }
 
     @Test
@@ -90,6 +118,19 @@ class DiaryControllerTest {
 
         LoginRequestDTO loginDto = new LoginRequestDTO(id, password);
         String token = loginUserAndGetToken(loginDto);
+
+        LocalDateTime date = LocalDateTime.of(2024, 5, 2, 0, 0);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/diary/list")
+                .header("Authorization",  "Bearer " + token)
+                .param("date", String.valueOf(date)));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.message").value("일기 목록 불러오기 완료"));
     }
 
     private String loginUserAndGetToken(LoginRequestDTO loginDto) throws Exception {

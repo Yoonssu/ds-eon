@@ -51,6 +51,6 @@ public class DiaryController {
         List<DiaryDTO> result = diaryService.getDiarys(userId, date);
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO<>(200, true, "일기 목록 반환 완료", result));
+                .body(new ResponseDTO<>(200, true, "일기 목록 불러오기 완료", result));
     }
 }
