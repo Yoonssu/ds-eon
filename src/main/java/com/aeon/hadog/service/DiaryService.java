@@ -49,7 +49,7 @@ public class DiaryService {
         Diary diary = Diary.builder()
                 .emotionTrack(emotionTrack)
                 .userId(user.getUserId())
-                .diaryDate(diaryDTO.getDiaryDate())
+                .diaryDate(emotionTrack.getEmotionDate())
                 .content(diaryDTO.getContent())
                 .build();
 
