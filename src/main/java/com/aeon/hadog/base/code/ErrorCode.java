@@ -33,7 +33,8 @@ public enum ErrorCode {
     DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 일기가 존재하지 않습니다"),
     PET_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 반려견이 존재하지 않습니다"),
 
-    SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다");
+    SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다"),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글이 존재하지 않습니다.");
 
     /*
      * 500 INTERNAL SERVER ERROR : 서버 에러

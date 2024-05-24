@@ -113,4 +113,20 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.EMOTIONTRACK_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.EMOTIONTRACK_NOT_FOUND));
     }
+
+    @ExceptionHandler(PetIdNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> petIdNotFoundException(final PetIdNotFoundException e) {
+        log.error("PetIdNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.PET_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.PET_NOT_FOUND));
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> commentNotFoundException(final CommentNotFoundException e) {
+        log.error("CommentNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.COMMENT_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.COMMENT_NOT_FOUND));
+    }
 }
