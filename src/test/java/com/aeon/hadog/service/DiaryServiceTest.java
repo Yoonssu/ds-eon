@@ -1,6 +1,9 @@
 package com.aeon.hadog.service;
 
+import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.diary.DiaryDTO;
+import com.aeon.hadog.base.exception.BlanckContentException;
+import com.aeon.hadog.base.exception.EmotionTrackNotBelongToUserException;
 import com.aeon.hadog.domain.Diary;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.DiaryRepository;
@@ -47,6 +50,25 @@ class DiaryServiceTest {
     }
 
     @Test
+    @DisplayName("일기 생성 실패 테스트 - userError")
+    void createDiary_userError() {
+        // given
+        String userId = "user2";
+        DiaryDTO dto = DiaryDTO.builder()
+                .emotionTrackId(1L)
+                .content("해피가 행복해보인다")
+                .build();
+
+        // when
+        Exception exception = assertThrows(EmotionTrackNotBelongToUserException.class, () -> {
+            diaryService.createDiary(userId, dto);
+        });
+
+        // then
+        assertEquals(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR, ((EmotionTrackNotBelongToUserException) exception).getErrorCode());
+    }
+
+    @Test
     @DisplayName("일기 상세 테스트")
     void getDiary() {
         // given
@@ -62,6 +84,23 @@ class DiaryServiceTest {
         assertEquals(diary.getEmotionTrack().getEmotionTrackId(), dto.getEmotionTrackId());
         assertEquals(diary.getDiaryDate(), dto.getDiaryDate());
         assertEquals(diary.getContent(), dto.getContent());
+    }
+
+    @Test
+    @DisplayName("일기 상세 실패 테스트 - userError")
+    void getDiary_userError() {
+        // given
+        String userId = "user2";
+        Long diaryId = 3L;
+
+        // when
+        Exception exception = assertThrows(EmotionTrackNotBelongToUserException.class, () -> {
+            diaryService.getDiary(userId, diaryId);
+        });
+
+        // then
+        assertEquals(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR, ((EmotionTrackNotBelongToUserException) exception).getErrorCode());
+
     }
 
     @Test
@@ -81,6 +120,42 @@ class DiaryServiceTest {
         assertEquals(diary.getEmotionTrack().getEmotionTrackId(), dto.getEmotionTrackId());
         assertEquals(diary.getDiaryDate(), dto.getDiaryDate());
         assertEquals(diary.getContent(), dto.getContent());
+    }
+
+    @Test
+    @DisplayName("일기 수정 실패 테스트 - userError")
+    void modifyDiary_userError() {
+        // given
+        String userId = "user2";
+        Long diaryId = 3L;
+        String content = "해피가 슬퍼보인다.";
+
+        // when
+        Exception exception = assertThrows(EmotionTrackNotBelongToUserException.class, () -> {
+            diaryService.modifyDiary(userId, diaryId, content);
+        });
+
+        // then
+        assertEquals(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR, ((EmotionTrackNotBelongToUserException) exception).getErrorCode());
+
+    }
+
+    @Test
+    @DisplayName("일기 수정 실패 테스트 - valueError")
+    void modifyDiary_valueError() {
+        // given
+        String userId = "user3";
+        Long diaryId = 3L;
+        String content = "";
+
+        // when
+        Exception exception = assertThrows(BlanckContentException.class, () -> {
+            diaryService.modifyDiary(userId, diaryId, content);
+        });
+
+        // then
+        assertEquals(ErrorCode.BLANK_CONTENT_ERROR, ((BlanckContentException) exception).getErrorCode());
+
     }
 
     @Test
