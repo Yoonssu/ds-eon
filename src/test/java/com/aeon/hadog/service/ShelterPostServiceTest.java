@@ -1,8 +1,10 @@
 package com.aeon.hadog.service;
 
+import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.shelter.ListShelterPostDTO;
 import com.aeon.hadog.base.dto.shelter.ShelterPostDTO;
 import com.aeon.hadog.base.dto.user.JoinRequestDTO;
+import com.aeon.hadog.base.exception.ShelterPostNotFoundException;
 import com.aeon.hadog.domain.ShelterPost;
 import com.aeon.hadog.domain.ShelterPostImages;
 import com.aeon.hadog.domain.User;
@@ -10,6 +12,7 @@ import com.aeon.hadog.repository.ShelterPostImagesRepository;
 import com.aeon.hadog.repository.ShelterPostRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,30 +77,51 @@ class ShelterPostServiceTest {
         assertEquals(findPost.getShelterPostId(), postId);
     }
 
-    @Test
+    @Nested
     @DisplayName("보호소 공고 상세 보기 테스트")
-    void getPostDetail() {
-        // given
-        Long postId = 21L;
-        // when
-        ShelterPostDTO result = shelterPostService.getPostDetail(postId);
+    class getPostDetailTest {
+        @Test
+        @DisplayName("보호소 공고 상세 보기 성공")
+        void getPostDetail() {
+            // given
+            Long postId = 21L;
 
-        // then
-        assertNotNull(result);
-        assertEquals("유기견20", result.getTitle());
-        assertEquals("유기견 공고입니다.", result.getContent());
-        assertEquals(LocalDateTime.of(2024, 5, 2, 0, 0), result.getStartDate());
-        assertEquals(LocalDateTime.of(2024, 5, 22, 0, 0), result.getEndDate());
-        assertEquals("여성", result.getSex());
-        assertEquals("흰색", result.getColor());
-        assertEquals("2살 미만", result.getAge());
-        assertEquals(1.5f, result.getWeight());
-        assertEquals("abvi323", result.getAdoptNum());
-        assertEquals("덕성여자대학교 정문", result.getFindLocation());
-        assertEquals("도봉구 보호소", result.getCenter());
-        assertEquals("02-123-4567", result.getCenterPhone());
-        assertEquals("도봉구 유기동물 부서", result.getDepartment());
-        assertEquals("02-789-4563", result.getDepartmentPhone());
+            // when
+            ShelterPostDTO result = shelterPostService.getPostDetail(postId);
+
+            // then
+            assertNotNull(result);
+            assertEquals("유기견20", result.getTitle());
+            assertEquals("유기견 공고입니다.", result.getContent());
+            assertEquals(LocalDateTime.of(2024, 5, 2, 0, 0), result.getStartDate());
+            assertEquals(LocalDateTime.of(2024, 5, 22, 0, 0), result.getEndDate());
+            assertEquals("여성", result.getSex());
+            assertEquals("흰색", result.getColor());
+            assertEquals("2살 미만", result.getAge());
+            assertEquals(1.5f, result.getWeight());
+            assertEquals("abvi323", result.getAdoptNum());
+            assertEquals("덕성여자대학교 정문", result.getFindLocation());
+            assertEquals("도봉구 보호소", result.getCenter());
+            assertEquals("02-123-4567", result.getCenterPhone());
+            assertEquals("도봉구 유기동물 부서", result.getDepartment());
+            assertEquals("02-789-4563", result.getDepartmentPhone());
+        }
+
+        @Test
+        @DisplayName("보호소 공고 상세 보기 실패 - postId")
+        void getPostDetail_PostId() {
+            // given
+            Long postId = 99L;
+
+            // when
+            Exception exception = assertThrows(ShelterPostNotFoundException.class, () -> {
+                shelterPostService.getPostDetail(postId);
+            });
+
+            // Assert
+            assertEquals(ErrorCode.SHELTER_POST_NOT_FOUND, ((ShelterPostNotFoundException) exception).getErrorCode());
+
+        }
     }
 
     @Test
