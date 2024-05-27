@@ -6,6 +6,7 @@ import com.aeon.hadog.base.dto.shelter.ShelterPostDTO;
 import com.aeon.hadog.service.AmazonS3Service;
 import com.aeon.hadog.service.ShelterPostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ShelterPostController {
     private final AmazonS3Service amazonS3Service;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> uploadShelterPost(@RequestPart ShelterPostDTO shelterPostDTO, @RequestPart(value = "images", required = false) List<MultipartFile> images){
+    public ResponseEntity<ResponseDTO> uploadShelterPost(@Valid @RequestPart ShelterPostDTO shelterPostDTO, @RequestPart(value = "images", required = false) List<MultipartFile> images){
 
         // s3 upload
         String folderName = "shelterPost";
