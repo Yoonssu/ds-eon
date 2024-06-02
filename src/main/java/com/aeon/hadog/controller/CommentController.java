@@ -22,8 +22,8 @@ public class CommentController {
 
     // 댓글 작성
     @PostMapping("/addComment")
-    public ResponseEntity<ResponseDTO> addComment(@AuthenticationPrincipal String userId, @RequestParam Long postId, @RequestParam String content) {
-        commentService.addComment(postId, userId, content);
+    public ResponseEntity<ResponseDTO> addComment(@AuthenticationPrincipal String userId, @RequestParam Long postId, @RequestParam String content, @RequestParam(required = false) Long parentCommentId) {
+        commentService.addComment(postId, userId, content, parentCommentId);
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO(200, true, "댓글 작성 성공", content));

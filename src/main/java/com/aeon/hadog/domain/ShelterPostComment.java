@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,8 +34,11 @@ public class ShelterPostComment {
     @CreatedDate
     private LocalDateTime createdDate; // 댓글 작성 날짜
 
-//    @ManyToOne
-//    @JoinColumn(name = "parent_id")
-//    private ShelterPostComment parent;
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id")
+    private ShelterPostComment parentComment; // 부모 댓글
+
+    @OneToMany(mappedBy = "parentComment", orphanRemoval = true)
+    private List<ShelterPostComment> replies; // 대댓글 목록
 
 }
