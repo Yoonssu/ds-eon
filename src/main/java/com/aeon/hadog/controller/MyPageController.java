@@ -1,53 +1,51 @@
-import com.aeon.hadog.base.dto.MyPageUserDTO;
+package com.aeon.hadog.controller;
+
+import com.aeon.hadog.base.dto.MyPageDTO;
 import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.response.ResponseDTO;
+import com.aeon.hadog.domain.User;
 import com.aeon.hadog.service.MyPageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/mypage")
+@RequiredArgsConstructor
 public class MyPageController {
 
-    @Autowired
-    private MyPageService myPageService;
+    private final MyPageService myPageService;
 
-    // 내 정보 조회
-    @GetMapping("/myInfo")
-    public ResponseEntity<MyPageUserDTO> getMyInfo(Authentication authentication) {
+    @GetMapping("/userinfo")
+    public ResponseEntity<ResponseDTO> getUserInfo(@AuthenticationPrincipal String user, @RequestBody MyPageDTO myPageDTO) {
         try {
-            String userId = (String) authentication.getPrincipal();
-            MyPageUserDTO userDTO = myPageService.getMyInfo(userId);
-            return ResponseEntity.ok().body(userDTO);
+            MyPageDTO userInfo = myPageService.getUserInfo(user);
+            return ResponseEntity.ok(new ResponseDTO<>(200, true, "사용자 정보 조회 성공", userInfo));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.ok(new ResponseDTO<>(400, false, "사용자 정보 조회 실패: " + e.getMessage(), null));
         }
     }
 
-    // 반려견 정보 조회
-    @GetMapping("/petInfo")
-    public ResponseEntity<PetDTO> getPetInfo(Authentication authentication) {
+    @GetMapping("/petinfo")
+    public ResponseEntity<ResponseDTO<List<PetDTO>>> getPetInfo(@AuthenticationPrincipal Long user) {
         try {
-            String userId = (String) authentication.getPrincipal();
-            PetDTO petDTO = myPageService.getPetInfo(userId);
-            return ResponseEntity.ok().body(petDTO);
+            List<PetDTO> petInfo = myPageService.getPetInfo(user);
+            return ResponseEntity.ok(new ResponseDTO<>(200, true, "반려견 정보 조회 성공", petInfo));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.ok(new ResponseDTO<>(400, false, "반려견 정보 조회 실패: " + e.getMessage(), null));
         }
     }
 
-    // 닉네임 변경
     @PutMapping("/nickname")
-    public ResponseEntity<String> updateNickname(@RequestParam String newNickname, Authentication authentication) {
+    public ResponseEntity<ResponseDTO<Void>> updateNickname(@AuthenticationPrincipal String user, @RequestParam String newNickname) {
         try {
-            String userId = (String) authentication.getPrincipal();
-            myPageService.updateNickname(userId, newNickname);
-            return ResponseEntity.ok().body("Nickname updated successfully");
+            myPageService.updateNickname(user, newNickname);
+            return ResponseEntity.ok(new ResponseDTO<>(200, true, "닉네임 수정 성공", null));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.ok(new ResponseDTO<>(400, false, "닉네임 수정 실패: " + e.getMessage(), null));
         }
     }
 }

@@ -75,20 +75,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PetNotFoundException.class)
-    protected ResponseEntity<ErrorResponseDTO> PetNotFoundException(final PetNotFoundException e) {
+    protected ResponseEntity<ErrorResponseDTO> handlePetNotFoundException(final PetNotFoundException e) {
         log.error("PetNotFoundException : {}", e.getMessage());
         return ResponseEntity
-                .status(ErrorCode.PET_NOT_FOUND.getStatus().value())
-                .body(new ErrorResponseDTO(ErrorCode.PET_NOT_FOUND));
+                .status(e.getErrorCode().getStatus().value())
+                .body(new ErrorResponseDTO(e.getErrorCode()));
     }
 
-    @ExceptionHandler(NicknameAlreadyExistsException.class)
-    protected ResponseEntity<ErrorResponseDTO> NicknameAlreadyExistsException(final NicknameAlreadyExistsException e) {
-        log.error("NicknameAlreadyExistsException : {}", e.getMessage());
-        return ResponseEntity
-                .status(ErrorCode.NICKNAME_ALREADY_EXISTS_EXCEPTION.getStatus().value())
-                .body(new ErrorResponseDTO(ErrorCode.NICKNAME_ALREADY_EXISTS_EXCEPTION));
-    }
 
 
 

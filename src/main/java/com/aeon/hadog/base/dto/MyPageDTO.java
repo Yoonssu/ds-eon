@@ -1,7 +1,5 @@
 package com.aeon.hadog.base.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
@@ -9,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class MyPageUserDTO {
+public class MyPageDTO {
 
     private String name;
     private String id;
