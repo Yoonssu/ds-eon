@@ -5,7 +5,6 @@ import com.aeon.hadog.base.exception.CommentNotFoundException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.ShelterPostComment;
 import com.aeon.hadog.repository.ShelterPostCommentRepository;
-import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,19 +21,28 @@ public class ShelterPostCommentService {
     private final UserService userService;
 
     // 게시글에 대한 댓글 조회
-    public List<ShelterPostComment> getCommentByShelterPostId(Long shelterPost) {
-        return shelterPostCmtRepository.findByShelterPostId(shelterPost);
+    public List<ShelterPostComment> getCommentByShelterPostId(Long shelterPostId) {
+
+        return shelterPostCmtRepository.findByShelterPostId(shelterPostId);
     }
 
     // 댓글 작성
     @Transactional
-    public Long addComment(Long shelterPostId, String userId, String content) {
+    public Long addComment(Long shelterPostId, String userId, String content, Long parentCommentId) {
+
+        ShelterPostComment parentComment = null;
+
+        if (parentCommentId != null) {
+            parentComment = shelterPostCmtRepository.findById(parentCommentId)
+                    .orElseThrow(() -> new CommentNotFoundException(ErrorCode.COMMENT_NOT_FOUND));
+        }
 
         ShelterPostComment comment = ShelterPostComment.builder()
                 .shelterPostId(shelterPostId)
                 .userId(userId)
                 .content(content)
                 .createdDate(LocalDateTime.now())
+                .parentComment(parentComment)
                 .build();
 
         shelterPostCmtRepository.save(comment);
