@@ -7,6 +7,7 @@ import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.domain.AdoptReview;
 import com.aeon.hadog.domain.ReviewComment;
 import com.aeon.hadog.domain.User;
+import com.aeon.hadog.repository.UserRepository;
 import com.aeon.hadog.service.AdoptReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +24,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class AdoptReviewController {
+    private final UserRepository userRepository;
 
     private final AdoptReviewService adoptReviewService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<AdoptReviewDTO>> createReview(@AuthenticationPrincipal User user,
+    public ResponseEntity<ResponseDTO<AdoptReviewDTO>> createReview(@AuthenticationPrincipal String user,
                                                                     @RequestPart AdoptReviewDTO reviewDTO,
                                                                     @RequestPart List<MultipartFile> images) {
         try {
+            User user1 = userRepository.findById(user).orElseThrow();
             AdoptReview review = AdoptReview.builder()
-                    .user(user)
+                    .user(user1)
                     .reviewDate(LocalDateTime.now())
                     .content(reviewDTO.getContent())
                     .build();
