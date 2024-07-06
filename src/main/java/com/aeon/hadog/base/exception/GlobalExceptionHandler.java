@@ -90,6 +90,15 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.USER_NOT_FOUND));
     }
 
+
+    @ExceptionHandler(ShelterPostNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> ShelterPostNotFoundException(final ShelterPostNotFoundException e) {
+        log.error("ShelterPostNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.SHELTER_POST_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.SHELTER_POST_NOT_FOUND));
+    }
+
     @ExceptionHandler(DiaryNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> DiaryNotFoundException(final DiaryNotFoundException e) {
         log.error("DiaryNotFoundException : {}", e.getMessage());
@@ -104,5 +113,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(ErrorCode.EMOTIONTRACK_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.EMOTIONTRACK_NOT_FOUND));
+    }
+
+    @ExceptionHandler(PetIdNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> petIdNotFoundException(final PetIdNotFoundException e) {
+        log.error("PetIdNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.PET_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.PET_NOT_FOUND));
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> commentNotFoundException(final CommentNotFoundException e) {
+        log.error("CommentNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.COMMENT_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.COMMENT_NOT_FOUND));
     }
 }

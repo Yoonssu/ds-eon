@@ -1,6 +1,9 @@
 package com.aeon.hadog.service;
 
+import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.pet.PetDTO;
+import com.aeon.hadog.base.exception.DuplicateIdException;
+import com.aeon.hadog.base.exception.PetIdNotFoundException;
 import com.aeon.hadog.domain.Pet;
 import com.aeon.hadog.repository.PetRepository;
 import com.aeon.hadog.repository.UserRepository;
@@ -54,7 +57,7 @@ public class PetService {
             return pet.getPetId();
 
         } else {
-            throw new IllegalArgumentException("해당 ID로 Pet을 찾을 수 없습니다.");
+            throw new PetIdNotFoundException(ErrorCode.PET_NOT_FOUND);
         }
 
     }
@@ -75,7 +78,7 @@ public class PetService {
 
             return petDTO;
         } else {
-            throw new IllegalArgumentException("해당 ID로 Pet을 찾을 수 없습니다.");
+            throw new PetIdNotFoundException(ErrorCode.PET_NOT_FOUND);
         }
 
     }

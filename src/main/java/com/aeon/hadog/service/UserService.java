@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,10 @@ public class UserService {
     private JwtTokenProvider jwtTokenProvider;
     private PasswordEncoder passwordEncoder =new BCryptPasswordEncoder();
 
+    public Long findById(String userId) { // 스트링아이디를 통해 유저 id 키 찾기
+        Optional<User> user = userRepository.findById(userId);
+        return user.get().getUserId();
+    }
 
     public Long signup(JoinRequestDTO joinRequestDTO) {
 
