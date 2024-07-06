@@ -2,7 +2,7 @@ package com.aeon.hadog.service;
 
 import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.MyPageDTO;
-import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.exception.PetNotFoundException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.Pet;

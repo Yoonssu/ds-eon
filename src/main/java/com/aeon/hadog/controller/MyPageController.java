@@ -1,7 +1,7 @@
 package com.aeon.hadog.controller;
 
 import com.aeon.hadog.base.dto.MyPageDTO;
-import com.aeon.hadog.base.dto.PetDTO;
+import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.service.MyPageService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,7 @@ public class MyPageController {
 
     @PutMapping("/nickname")
     public ResponseEntity<ResponseDTO<Void>> updateNickname(@AuthenticationPrincipal String user, @RequestParam String newNickname) {
+
         try {
             myPageService.updateNickname(user, newNickname);
             return ResponseEntity.ok(new ResponseDTO<>(200, true, "닉네임 수정 성공", null));
