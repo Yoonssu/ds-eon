@@ -16,7 +16,6 @@ public class DiaryDTO {
     @NotNull
     private Long emotionTrackId;
 
-    @NotNull
     private LocalDateTime diaryDate;
 
     @NotBlank(message = "내용은 필수 입력 값입니다.")

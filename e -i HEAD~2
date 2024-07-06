@@ -1,0 +1,254 @@
+[33mcommit 2ff966c41d0b516a034da0bba3c2cae87ab0e795[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmypage[m[33m)[m
+Author: Yoonssu <orvosdoktor21@naver.com>
+Date:   Sun Jun 2 21:14:46 2024 +0900
+
+    edit feat:Fmypage ì예외 처리
+
+[33mcommit cec3108e5884bcb0ae64a71acb6c2ac08455bdb0[m
+Author: Yoonssu <orvosdoktor21@naver.com>
+Date:   Sun Jun 2 21:11:20 2024 +0900
+
+    edit Feat: ãMyPage 예외 처리
+
+[33mcommit b3f2e01e6f6ed91ff522de2feb064973cc0b9c95[m[33m ([m[1;31morigin/mypage[m[33m)[m
+Author: Yoonssu <orvosdoktor21@naver.com>
+Date:   Sun May 12 16:51:14 2024 +0900
+
+    FEAT: MyPage 내정보,반려견정보,닉네임반환
+
+[33mcommit 18db7716ec2b1b5a9310190efee8363db5cad4f8[m
+Merge: 867cf7a 8192cba
+Author: Minkyeong Yu <101331330+mk020@users.noreply.github.com>
+Date:   Thu May 2 10:30:02 2024 +0900
+
+    Merge pull request #20 from DS-AEON/user/login
+    
+    User/login Test코드 추가 및 auth 방식 변경
+
+[33mcommit 867cf7a0c26b531692386b8c056dd85eac114ccc[m
+Merge: 827ebb4 9573a42
+Author: Jihye <123048615+Jihye0623@users.noreply.github.com>
+Date:   Tue Apr 30 14:12:07 2024 +0900
+
+    Merge pull request #19 from DS-AEON/test/pet
+    
+    Test: 반려견 등록, 수정
+
+[33mcommit 8192cba7df5d86290950f00382e1be49dca92f5a[m[33m ([m[1;31morigin/user/login[m[33m)[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Tue Apr 30 11:52:10 2024 +0900
+
+    Test: UserControllerTest 비밀번호 변경, 회원 탈퇴 테스트 추가
+
+[33mcommit 9573a4271956d330c7c931568eb9bee130696a3b[m[33m ([m[1;31morigin/test/pet[m[33m)[m
+Author: mk020 <mk02081@naver.com>
+Date:   Tue Apr 30 11:41:48 2024 +0900
+
+    Test: 반려견 등록, 수정 컨트롤러
+
+[33mcommit c4d8cad0fcdc7c200e13c378ae4aa4892f2eef4e[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Tue Apr 30 11:41:17 2024 +0900
+
+    Test: UserServiceTest 비밀번호 변경, 회원 탈퇴 테스트 추가
+
+[33mcommit 607909998e144e05c9e59f2e51a1f60c1db38824[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Tue Apr 30 11:16:45 2024 +0900
+
+    Refactor: 비밀번호 변경 기능 수정
+    
+    새 비밀번호 양식 검사 추가 - Error 코드 추가
+    이전 비밀번호 검사 - Error 코드 추가
+
+[33mcommit 358e96d6f20cebd692621a7271f5a15bf41c2d53[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Tue Apr 30 10:57:24 2024 +0900
+
+    Refactor: modifyPassword, deleteUser 메소드 @AuthenticationPrincipal 어노테이션으로 변경
+
+[33mcommit b0f5f4e7c50097a89c59ecb930dcb004f8935cc7[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Tue Apr 30 10:51:26 2024 +0900
+
+    Test:Transactional 어노테이션 추가
+
+[33mcommit 8a5c9204f9d3165529cabfa7ece57c873140df5f[m
+Author: mk020 <mk02081@naver.com>
+Date:   Mon Apr 29 17:18:02 2024 +0900
+
+    Test: 반려견 등록, 수정
+
+[33mcommit 1a87ac43b2059597d5d8f70c450b219d9537681d[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Sun Apr 28 23:17:59 2024 +0900
+
+    Test: UserServiceTest 추가
+    
+    회원 가입, 로그인 테스트 구현
+    아이디, 닉네임, 이메일 테스트 구현
+
+[33mcommit b7a0c6306d3df23e2a87c5b86977d51319f8f426[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Sun Apr 28 12:30:29 2024 +0900
+
+    Test: UserController DisplayName 추가
+
+[33mcommit 049eedb3aae79842d8f60c0f8166c763a7917908[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Sun Apr 28 12:29:13 2024 +0900
+
+    Test: UserControllerTest 추가
+    
+    회원가입, 로그인 테스트 추가
+    아이디, 닉네임, 이메일 중복 테스트 추가
+
+[33mcommit ff85a3436f24fd5b4d47a2d6e30de68bb729caee[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Sun Apr 28 10:37:36 2024 +0900
+
+    Refacor: 코드 리뷰 반영하여 수정
+
+[33mcommit 827ebb4839427196b012ef9b93c38e5b6a97d792[m
+Merge: 8e9bf09 9dd4cc8
+Author: Minkyeong Yu <101331330+mk020@users.noreply.github.com>
+Date:   Thu Apr 25 12:25:18 2024 +0900
+
+    Merge pull request #18 from DS-AEON/user/login
+    
+    SecretKey 변경 및 예외처리
+
+[33mcommit 9dd4cc865ca0dd2d9a229334f9bf951fad2fe826[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 24 10:39:17 2024 +0900
+
+    Feat: 에러 처리
+    
+    - GlobalExceptionHandler 생성
+    - RestControllerAdvice를 통한 예외 처리
+    - UserService에서 발생하는 에러 모두 custom
+    
+    Resolves: #16
+
+[33mcommit 5bc237274682429638ea0c1ebbfc2d9892be15d1[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 24 09:34:38 2024 +0900
+
+    Refactor: gitignore 추가
+    
+    gitignore가 적용이 되지 않아 캐시를 삭제 후 커밋 시도
+
+[33mcommit da6ec19beb043fbecb6e5425fe2cfc986e20fb3e[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 24 09:31:02 2024 +0900
+
+    Refactor: SecretKey 및 gitignore 수정
+
+[33mcommit 8e9bf0960e95545cdfe555feae3a79dc1635548a[m
+Merge: 1d20314 b2ebece
+Author: Minkyeong Yu <101331330+mk020@users.noreply.github.com>
+Date:   Sun Apr 21 21:17:33 2024 +0900
+
+    Merge pull request #11 from DS-AEON/pet
+    
+    Feat: 반려견 정보 수정 기능, 조회 기능
+
+[33mcommit b2ebecee8a69cff89cc76a1c2db0b1ed2b9d0a81[m[33m ([m[1;31morigin/pet[m[33m)[m
+Author: mk020 <mk02081@naver.com>
+Date:   Sun Apr 21 21:10:55 2024 +0900
+
+    Feat: 반려견 정보 수정 기능, 조회 기능
+
+[33mcommit 1d20314107c9f1a6ec7e1799127ac864095facb0[m
+Merge: a8593d4 3259cfb
+Author: Minkyeong Yu <101331330+mk020@users.noreply.github.com>
+Date:   Sun Apr 21 18:28:44 2024 +0900
+
+    Merge pull request #10 from DS-AEON/pet
+    
+    Feat: 반려견 등록 기능
+
+[33mcommit 3259cfb26c8d08c846b7ee632260e2fe01f43483[m
+Author: mk020 <mk02081@naver.com>
+Date:   Sun Apr 21 18:19:59 2024 +0900
+
+    Feat: 반려견 등록 기능
+
+[33mcommit a8593d456f184dc844c6bc9df03efb05f71f2000[m
+Merge: 12193bb cc42c65
+Author: Jihye <123048615+Jihye0623@users.noreply.github.com>
+Date:   Fri Apr 19 15:22:57 2024 +0900
+
+    Merge pull request #9 from DS-AEON/user/login
+    
+    Style: Slf4j를 이용하여 로그 남김
+
+[33mcommit cc42c655f608668655d8be68da51558135eea77a[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Fri Apr 19 15:21:13 2024 +0900
+
+    Style: Slf4j를 이용하여 로그 남김
+    
+    토큰 발급 과정시 로그 확인할 수 있도록 추가
+
+[33mcommit 12193bbc8170912f4773725fab380471f26c6d9e[m
+Merge: 40934af 7dd8841
+Author: Jihye <123048615+Jihye0623@users.noreply.github.com>
+Date:   Fri Apr 19 14:52:36 2024 +0900
+
+    Merge pull request #8 from DS-AEON/user/login
+    
+    Refactor: 비밀번호 유효성 검사
+
+[33mcommit 7dd8841a8f50cc7d4804fc43e2b74f7e26f2c83b[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Fri Apr 19 14:50:33 2024 +0900
+
+    Refactor: 비밀번호 유효성 검사
+    
+    - 이름, 아이디, 비밀번호, 닉네임, 이메일 필수 입력
+    - 아이디는 5~16자 영문 대소문자와 숫자만 가능
+    - 비밀번호는 8~16자 영문 대소문자와 숫자, 특수문자 가능
+    - 닉네임은 특수문제를 제외한 2~10자리 문자
+
+[33mcommit 40934af930b8ae6738b707d6c093c7225f2a8ed2[m
+Merge: cf6c958 26d4ad5
+Author: Jihye <123048615+Jihye0623@users.noreply.github.com>
+Date:   Wed Apr 17 14:30:38 2024 +0900
+
+    Merge pull request #7 from DS-AEON/user/login
+    
+    User/login
+
+[33mcommit 26d4ad5633f0063c15826c8fbdbfade09bd609ee[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 17 14:27:26 2024 +0900
+
+    Refactor: API명 변경
+
+[33mcommit 80dadd1f6b28c7da528d20da658ef73210a4038f[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 17 14:25:25 2024 +0900
+
+    Feat: 회원 탈퇴 기능
+
+[33mcommit 45ddaeefbf7b7f71e423c0fe0ca4ca9277a7e79b[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Wed Apr 17 12:04:07 2024 +0900
+
+    Feat: 비밀번호 변경 기능
+
+[33mcommit cf6c958f0e77163babfd5b804e9de40f0302e3c0[m
+Merge: 16d066c 709b158
+Author: Jihye <123048615+Jihye0623@users.noreply.github.com>
+Date:   Fri Apr 12 16:47:56 2024 +0900
+
+    Merge pull request #6 from DS-AEON/user/login
+    
+    Feat: 아이디, 닉네임, 이메일 중복 검증 API 추가
+
+[33mcommit 709b15870a4b53adddeebea84232828b64900469[m
+Author: Jihye0623 <wisdxx@gmail.com>
+Date:   Fri Apr 12 16:46:34 2024 +0900
+
+    Feat: 아이디, 닉네임, 이메�
