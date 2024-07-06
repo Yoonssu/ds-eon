@@ -90,6 +90,7 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.USER_NOT_FOUND));
     }
 
+
     @ExceptionHandler(ShelterPostNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> ShelterPostNotFoundException(final ShelterPostNotFoundException e) {
         log.error("ShelterPostNotFoundException : {}", e.getMessage());

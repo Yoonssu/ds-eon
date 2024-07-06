@@ -24,6 +24,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests((authorizeRequests) ->
                     authorizeRequests.requestMatchers("/", "/user/**", "/shelterPost/**", "/comment/**").permitAll()
                             .anyRequest().authenticated()
+
             );
         httpSecurity
             .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
