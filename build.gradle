@@ -33,6 +33,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 	implementation 'mysql:mysql-connector-java:8.0.32'
 	runtimeOnly 'com.h2database:h2'
@@ -42,6 +43,8 @@ dependencies {
 
 	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
 
+	// Spring Cloud Starter AWS
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 

@@ -21,12 +21,20 @@ public enum ErrorCode {
     PASSWORD_MISMATCH(HttpStatus.FORBIDDEN, "비밀번호가 잘못 입력되었습니다."),
     PASSWORD_FORMAT_INVALID(HttpStatus.FORBIDDEN, "새 비밀번호는 영문, 숫자, 특수문자를 포함하고 8~16자여야 합니다."),
     NEW_PASSWORD_SAME_AS_OLD(HttpStatus.FORBIDDEN, "새 비밀번호는 이전 비밀번호와 다르게 설정해야 합니다."),
+    BLANK_CONTENT_ERROR(HttpStatus.FORBIDDEN, "일기 내용은 필수로 작성해야 합니다."),
+    EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR(HttpStatus.FORBIDDEN, "사용자의 펫 ID와 감정 트랙의 펫 ID가 일치하지 않습니다."),
 
-            /*
+
+    /*
      * 404 NOT_FOUND : 잘못된 리소스 접근
      */
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 유저가 존재하지 않습니다");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 유저가 존재하지 않습니다"),
+    EMOTIONTRACK_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 감정 분석 결과가 존재하지 않습니다"),
+    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 일기가 존재하지 않습니다"),
+    PET_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 반려견이 존재하지 않습니다"),
 
+    SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다"),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글이 존재하지 않습니다.");
 
     /*
      * 500 INTERNAL SERVER ERROR : 서버 에러

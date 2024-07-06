@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name="diary")
 public class Diary {
     @Id
@@ -22,6 +22,9 @@ public class Diary {
     @ManyToOne
     @JoinColumn(name = "emotion_track_id", nullable = false)
     private EmotionTrack emotionTrack;
+
+    @Column(nullable = false)
+    private Long userId;
 
     @Column(nullable=false)
     private LocalDateTime diaryDate;

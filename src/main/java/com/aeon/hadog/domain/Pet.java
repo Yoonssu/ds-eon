@@ -27,8 +27,8 @@ public class Pet {
     @Column
     private String breed;
 
-    @Column(nullable=false)
-    private Boolean sex; // 남: 1, 여: 0
+    @Column(nullable=false, length = 1)
+    private String sex; // 남: M, 여: F
 
     @Column(nullable=false)
     private Boolean neuter;

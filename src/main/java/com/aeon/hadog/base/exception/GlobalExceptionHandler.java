@@ -66,6 +66,22 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.NEW_PASSWORD_SAME_AS_OLD));
     }
 
+    @ExceptionHandler(BlanckContentException.class)
+    protected ResponseEntity<ErrorResponseDTO> BlanckContentException(final BlanckContentException e) {
+        log.error("BlanckContentException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.BLANK_CONTENT_ERROR.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.BLANK_CONTENT_ERROR));
+    }
+
+    @ExceptionHandler(EmotionTrackNotBelongToUserException.class)
+    protected ResponseEntity<ErrorResponseDTO> EmotionTrackNotBelongToUserException(final EmotionTrackNotBelongToUserException e) {
+        log.error("EmotionTrackNotBelongToUserException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR));
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     protected ResponseEntity<ErrorResponseDTO> UserNotFoundException(final UserNotFoundException e) {
         log.error("UserNotFoundException : {}", e.getMessage());
@@ -74,15 +90,44 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDTO(ErrorCode.USER_NOT_FOUND));
     }
 
-    @ExceptionHandler(PetNotFoundException.class)
-    protected ResponseEntity<ErrorResponseDTO> handlePetNotFoundException(final PetNotFoundException e) {
-        log.error("PetNotFoundException : {}", e.getMessage());
+
+    @ExceptionHandler(ShelterPostNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> ShelterPostNotFoundException(final ShelterPostNotFoundException e) {
+        log.error("ShelterPostNotFoundException : {}", e.getMessage());
         return ResponseEntity
-                .status(e.getErrorCode().getStatus().value())
-                .body(new ErrorResponseDTO(e.getErrorCode()));
+                .status(ErrorCode.SHELTER_POST_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.SHELTER_POST_NOT_FOUND));
     }
 
+    @ExceptionHandler(DiaryNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> DiaryNotFoundException(final DiaryNotFoundException e) {
+        log.error("DiaryNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.DIARY_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.DIARY_NOT_FOUND));
+    }
 
+    @ExceptionHandler(EmotionTrackNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> EmotionTrackNotFoundException(final EmotionTrackNotFoundException e) {
+        log.error("EmotionTrackNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.EMOTIONTRACK_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.EMOTIONTRACK_NOT_FOUND));
+    }
 
+    @ExceptionHandler(PetIdNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> petIdNotFoundException(final PetIdNotFoundException e) {
+        log.error("PetIdNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.PET_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.PET_NOT_FOUND));
+    }
 
+    @ExceptionHandler(CommentNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> commentNotFoundException(final CommentNotFoundException e) {
+        log.error("CommentNotFoundException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.COMMENT_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.COMMENT_NOT_FOUND));
+    }
 }
