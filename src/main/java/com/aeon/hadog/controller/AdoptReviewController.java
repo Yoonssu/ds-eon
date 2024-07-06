@@ -9,6 +9,7 @@ import com.aeon.hadog.repository.ReviewCommentRepository;
 import com.aeon.hadog.domain.AdoptReview;
 import com.aeon.hadog.domain.ReviewComment;
 import com.aeon.hadog.domain.User;
+import com.aeon.hadog.repository.UserRepository;
 import com.aeon.hadog.service.AdoptReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class AdoptReviewController {
+    private final UserRepository userRepository;
 
     private final UserRepository userRepository;
     private final AdoptReviewService adoptReviewService;
