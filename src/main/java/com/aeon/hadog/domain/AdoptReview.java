@@ -29,7 +29,7 @@ public class AdoptReview {
     @Column(nullable=false)
     private LocalDateTime reviewDate;
 
-    @OneToMany(mappedBy = "adoptReview", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "adoptReview", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ReviewImage> images;
 
 

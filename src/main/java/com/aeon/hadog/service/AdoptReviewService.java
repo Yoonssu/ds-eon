@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ public class AdoptReviewService {
 
     @Transactional
     public AdoptReview saveReview(AdoptReview review, List<MultipartFile> images) throws Exception {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        review.setImages(new ArrayList<>());
+
         AdoptReview savedReview = adoptReviewRepository.save(review);
 
         for (MultipartFile image : images) {
