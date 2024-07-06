@@ -3,7 +3,6 @@ package com.aeon.hadog.controller;
 import com.aeon.hadog.base.dto.MyPageDTO;
 import com.aeon.hadog.base.dto.PetDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
-import com.aeon.hadog.domain.User;
 import com.aeon.hadog.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping("/userinfo")
-    public ResponseEntity<ResponseDTO> getUserInfo(@AuthenticationPrincipal String user, @RequestBody MyPageDTO myPageDTO) {
+    public ResponseEntity<ResponseDTO<MyPageDTO>> getUserInfo(@AuthenticationPrincipal String user) {
         try {
             MyPageDTO userInfo = myPageService.getUserInfo(user);
             return ResponseEntity.ok(new ResponseDTO<>(200, true, "사용자 정보 조회 성공", userInfo));
@@ -30,7 +29,7 @@ public class MyPageController {
     }
 
     @GetMapping("/petinfo")
-    public ResponseEntity<ResponseDTO<List<PetDTO>>> getPetInfo(@AuthenticationPrincipal Long user) {
+    public ResponseEntity<ResponseDTO<List<PetDTO>>> getPetInfo(@AuthenticationPrincipal String user) {
         try {
             List<PetDTO> petInfo = myPageService.getPetInfo(user);
             return ResponseEntity.ok(new ResponseDTO<>(200, true, "반려견 정보 조회 성공", petInfo));

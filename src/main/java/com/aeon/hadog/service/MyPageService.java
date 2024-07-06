@@ -35,8 +35,8 @@ public class MyPageService {
                 .build();
     }
 
-    public List<PetDTO> getPetInfo(Long userId) {
-        Optional<Pet> petOptional = petRepository.findById(userId);
+    public List<PetDTO> getPetInfo(String userId) {
+        Optional<Pet> petOptional = petRepository.findById(Long.valueOf(userId));
         if (petOptional.isPresent()) {
             Pet pet = petOptional.get();
             return Collections.singletonList(mapToPetDTO(pet));
