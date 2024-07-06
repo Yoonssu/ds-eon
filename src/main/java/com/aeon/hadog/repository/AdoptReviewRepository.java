@@ -10,4 +10,8 @@ import java.util.List;
 public interface AdoptReviewRepository extends JpaRepository<AdoptReview, Long> {
 
     List<AdoptReview> findAllByOrderByReviewDateDesc();
+
+    List<AdoptReview> findByUser_IdOrderByReviewDateDesc(String userId);
+
+
 }
