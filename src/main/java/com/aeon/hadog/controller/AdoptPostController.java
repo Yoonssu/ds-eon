@@ -2,6 +2,7 @@ package com.aeon.hadog.controller;
 
 import com.aeon.hadog.base.dto.adoptPost.AdoptPostDTO;
 import com.aeon.hadog.base.dto.adoptPost.ListAdoptPostDTO;
+import com.aeon.hadog.base.dto.diary.DiaryDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.base.dto.shelter.ListShelterPostDTO;
 import com.aeon.hadog.base.dto.shelter.ShelterPostDTO;
@@ -57,5 +58,12 @@ public class AdoptPostController {
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO<>(200, true, "입양 공고 목록 불러오기 완료", result));
+    }
+    @PatchMapping
+    public ResponseEntity<ResponseDTO> modifyAdoptStatus(@AuthenticationPrincipal String userId, @RequestParam Long adoptPostId, @RequestParam boolean isAdopt){
+        boolean result = adoptPostService.modifyAdoptStatus(userId, adoptPostId, isAdopt);
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO<>(200, true, "입양 상태 수정 완료", result));
     }
 }

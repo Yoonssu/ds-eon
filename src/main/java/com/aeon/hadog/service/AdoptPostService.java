@@ -3,6 +3,10 @@ package com.aeon.hadog.service;
 import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.adoptPost.AdoptPostDTO;
 import com.aeon.hadog.base.dto.adoptPost.ListAdoptPostDTO;
+import com.aeon.hadog.base.dto.diary.DiaryDTO;
+import com.aeon.hadog.base.exception.BlanckContentException;
+import com.aeon.hadog.base.exception.DiaryNotFoundException;
+import com.aeon.hadog.base.exception.EmotionTrackNotBelongToUserException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.*;
 import com.aeon.hadog.repository.AdoptPostImagesRepository;
@@ -19,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -105,6 +106,20 @@ public class AdoptPostService {
         dto.setDuration(adoptPost.getDuration());
         dto.setThumbnail(adoptPostImagesRepository.findFirstByAdoptPostOrderByAdoptPostImagesIdAsc(adoptPost).getImageUrl());
         return dto;
+    }
+
+    public boolean modifyAdoptStatus(String userId, Long adoptPostId, boolean isAdopt){
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
+        AdoptPost post = adoptPostRepository.findByAdoptPostId(adoptPostId).orElseThrow();
+
+        if (!Objects.equals(user.getUserId(), post.getUser().getUserId())) {
+            throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
+        }
+
+        post.setAdoptStatus(isAdopt);
+        adoptPostRepository.save(post);
+
+        return isAdopt;
     }
 
     public Map<String, String> validateHandling(Errors errors) {
