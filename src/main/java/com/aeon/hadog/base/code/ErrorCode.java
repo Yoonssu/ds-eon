@@ -23,6 +23,7 @@ public enum ErrorCode {
     NEW_PASSWORD_SAME_AS_OLD(HttpStatus.FORBIDDEN, "새 비밀번호는 이전 비밀번호와 다르게 설정해야 합니다."),
     BLANK_CONTENT_ERROR(HttpStatus.FORBIDDEN, "일기 내용은 필수로 작성해야 합니다."),
     EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR(HttpStatus.FORBIDDEN, "사용자의 펫 ID와 감정 트랙의 펫 ID가 일치하지 않습니다."),
+    ADOPT_POST_NOT_BELONG_TO_USER_ERROR(HttpStatus.FORBIDDEN, "사용자가 작성하지 않은 임시보호 공고글 입니다"),
 
 
     /*
@@ -34,7 +35,8 @@ public enum ErrorCode {
     PET_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 반려견이 존재하지 않습니다"),
 
     SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다"),
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글이 존재하지 않습니다.");
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글이 존재하지 않습니다."),
+    ADOPT_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 임시보호 공고가 존재하지 않습니다.");
 
     /*
      * 500 INTERNAL SERVER ERROR : 서버 에러

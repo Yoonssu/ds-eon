@@ -3,9 +3,8 @@ package com.aeon.hadog.service;
 import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.adoptPost.AdoptPostDTO;
 import com.aeon.hadog.base.dto.adoptPost.ListAdoptPostDTO;
-import com.aeon.hadog.base.dto.diary.DiaryDTO;
-import com.aeon.hadog.base.exception.BlanckContentException;
-import com.aeon.hadog.base.exception.DiaryNotFoundException;
+import com.aeon.hadog.base.exception.AdoptPostNotBelongToUserException;
+import com.aeon.hadog.base.exception.AdoptPostNotFoundException;
 import com.aeon.hadog.base.exception.EmotionTrackNotBelongToUserException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.*;
@@ -14,7 +13,6 @@ import com.aeon.hadog.repository.AdoptPostRepository;
 import com.aeon.hadog.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +63,7 @@ public class AdoptPostService {
     }
 
     public AdoptPostDTO getPostDetail(Long postId){
-        AdoptPost post = adoptPostRepository.findByAdoptPostId(postId).orElseThrow();
+        AdoptPost post = adoptPostRepository.findByAdoptPostId(postId).orElseThrow(()->new AdoptPostNotFoundException(ErrorCode.ADOPT_POST_NOT_FOUND));
         List<AdoptPostImages> adoptPostImages = adoptPostImagesRepository.findByAdoptPost(post);
 
         List<String> images = new ArrayList<>();
@@ -110,10 +108,10 @@ public class AdoptPostService {
 
     public boolean modifyAdoptStatus(String userId, Long adoptPostId, boolean isAdopt){
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
-        AdoptPost post = adoptPostRepository.findByAdoptPostId(adoptPostId).orElseThrow();
+        AdoptPost post = adoptPostRepository.findByAdoptPostId(adoptPostId).orElseThrow(()->new AdoptPostNotFoundException(ErrorCode.ADOPT_POST_NOT_FOUND));
 
         if (!Objects.equals(user.getUserId(), post.getUser().getUserId())) {
-            throw new EmotionTrackNotBelongToUserException(ErrorCode.EMOTION_TRACK_NOT_BELONG_TO_USER_ERROR);
+            throw new AdoptPostNotBelongToUserException(ErrorCode.ADOPT_POST_NOT_BELONG_TO_USER_ERROR);
         }
 
         post.setAdoptStatus(isAdopt);

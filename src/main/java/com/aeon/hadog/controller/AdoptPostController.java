@@ -2,14 +2,9 @@ package com.aeon.hadog.controller;
 
 import com.aeon.hadog.base.dto.adoptPost.AdoptPostDTO;
 import com.aeon.hadog.base.dto.adoptPost.ListAdoptPostDTO;
-import com.aeon.hadog.base.dto.diary.DiaryDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
-import com.aeon.hadog.base.dto.shelter.ListShelterPostDTO;
-import com.aeon.hadog.base.dto.shelter.ShelterPostDTO;
-import com.aeon.hadog.domain.AdoptPost;
 import com.aeon.hadog.service.AdoptPostService;
 import com.aeon.hadog.service.AmazonS3Service;
-import com.aeon.hadog.service.ShelterPostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
