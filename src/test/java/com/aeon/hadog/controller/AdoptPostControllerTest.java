@@ -132,6 +132,7 @@ class AdoptPostControllerTest {
     }
 
     @Test
+    @DisplayName("임시보호 공고 상태 변경 테스트")
     void modifyAdoptStatus() throws Exception{
         // given
         String id = "user3";
