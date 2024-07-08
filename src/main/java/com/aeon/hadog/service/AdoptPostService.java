@@ -5,7 +5,6 @@ import com.aeon.hadog.base.dto.adoptPost.AdoptPostDTO;
 import com.aeon.hadog.base.dto.adoptPost.ListAdoptPostDTO;
 import com.aeon.hadog.base.exception.AdoptPostNotBelongToUserException;
 import com.aeon.hadog.base.exception.AdoptPostNotFoundException;
-import com.aeon.hadog.base.exception.EmotionTrackNotBelongToUserException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
 import com.aeon.hadog.domain.*;
 import com.aeon.hadog.repository.AdoptPostImagesRepository;
