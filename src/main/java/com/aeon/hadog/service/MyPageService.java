@@ -2,9 +2,12 @@ package com.aeon.hadog.service;
 
 import com.aeon.hadog.base.code.ErrorCode;
 import com.aeon.hadog.base.dto.MyPageDTO;
+import com.aeon.hadog.base.dto.adopt_review.AdoptReviewDTO;
+import com.aeon.hadog.base.dto.adopt_review.ReviewImageDTO;
 import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.exception.PetNotFoundException;
 import com.aeon.hadog.base.exception.UserNotFoundException;
+import com.aeon.hadog.domain.AdoptReview;
 import com.aeon.hadog.domain.Pet;
 import com.aeon.hadog.domain.User;
 import com.aeon.hadog.repository.PetRepository;
@@ -23,6 +26,7 @@ public class MyPageService {
 
     private final UserRepository userRepository;
     private final PetRepository petRepository;
+    private final AdoptReviewService adoptReviewService;
 
     public MyPageDTO getUserInfo(String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
@@ -62,4 +66,27 @@ public class MyPageService {
                 .age(pet.getAge())
                 .build();
     }
+
+    // 사용자 ID를 기반으로 해당 사용자가 작성한 입양 후기 목록을 DTO로 변환하여 반환하는 메서드
+    public List<AdoptReviewDTO> getAdoptReviewsByUserId(String userId) {
+        return adoptReviewService.findReviewsByUserId(userId).stream()
+                .map(this::mapToAdoptReviewDTO)
+                .collect(Collectors.toList());
+    }
+
+    private AdoptReviewDTO mapToAdoptReviewDTO(AdoptReview review) {
+        return AdoptReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .reviewDate(review.getReviewDate())
+                .content(review.getContent())
+                .images(review.getImages().stream()
+                        .map(image -> ReviewImageDTO.builder()
+                                .imageId(image.getImageId())
+                                .fileName(image.getFileName())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+
 }

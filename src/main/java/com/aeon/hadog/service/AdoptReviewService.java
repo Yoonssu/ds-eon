@@ -74,4 +74,10 @@ public class AdoptReviewService {
     public List<ReviewComment> findRepliesByParentCommentId(Long parentCommentId) {
         return reviewCommentRepository.findByParentCommentCmtId(parentCommentId);
     }
+
+    // 사용자 ID를 기반으로 해당 사용자가 작성한 입양 후기 목록을 조회하는 메서드
+    public List<AdoptReview> findReviewsByUserId(String userId) {
+        return adoptReviewRepository.findByUser_IdOrderByReviewDateDesc(userId);
+    }
+
 }

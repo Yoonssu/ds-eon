@@ -1,6 +1,8 @@
 package com.aeon.hadog.controller;
 
 import com.aeon.hadog.base.dto.MyPageDTO;
+import com.aeon.hadog.base.dto.adopt_review.AdoptReviewDTO;
+import com.aeon.hadog.base.dto.adopt_review.ReviewImageDTO;
 import com.aeon.hadog.base.dto.pet.PetDTO;
 import com.aeon.hadog.base.dto.response.ResponseDTO;
 import com.aeon.hadog.service.MyPageService;
@@ -10,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/mypage")
@@ -48,4 +51,18 @@ public class MyPageController {
             return ResponseEntity.ok(new ResponseDTO<>(400, false, "닉네임 수정 실패: " + e.getMessage(), null));
         }
     }
+
+    // 사용자가 작성한 입양 후기 목록을 조회하는 API 엔드포인트
+    @GetMapping("/adoptreviews")
+    public ResponseEntity<ResponseDTO<List<AdoptReviewDTO>>> getAdoptReviewsByUser(@AuthenticationPrincipal String userId) {
+        try {
+            List<AdoptReviewDTO> adoptReviews = myPageService.getAdoptReviewsByUserId(userId);
+            return ResponseEntity.ok(new ResponseDTO<>(200, true, "사용자 입양 후기 목록 조회 성공", adoptReviews));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ResponseDTO<>(400, false, "사용자 입양 후기 목록 조회 실패: " + e.getMessage(), null));
+        }
+    }
+
+
 }
+
