@@ -130,4 +130,20 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.COMMENT_NOT_FOUND.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.COMMENT_NOT_FOUND));
     }
+
+    @ExceptionHandler(AdoptPostNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> adoptPostNotFoundException(final AdoptPostNotFoundException e) {
+        log.error("AdoptPostNotFound : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.ADOPT_POST_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.ADOPT_POST_NOT_FOUND));
+    }
+
+    @ExceptionHandler(AdoptPostNotBelongToUserException.class)
+    protected ResponseEntity<ErrorResponseDTO> adoptPostNotBelongToUserException(final AdoptPostNotBelongToUserException e) {
+        log.error("AdoptPostNotBelongToUserException : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.ADOPT_POST_NOT_BELONG_TO_USER_ERROR.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.ADOPT_POST_NOT_BELONG_TO_USER_ERROR));
+    }
 }
