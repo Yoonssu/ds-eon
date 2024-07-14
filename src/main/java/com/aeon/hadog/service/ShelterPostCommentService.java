@@ -55,35 +55,6 @@ public class ShelterPostCommentService {
 
         return dto;
     }
-//    public List<CommentDTO> getCommentByShelterPostId(Long shelterPostId) {
-//
-//        List<ShelterPostComment> commentList = shelterPostCmtRepository.findByShelterPostId(shelterPostId);
-//
-//        List<CommentDTO> commentDtoList = commentList.stream().map(comment -> {
-//
-//            CommentDTO commentDTO = new CommentDTO();
-//            commentDTO.setCommentId(comment.getShelterPostCommentId());
-//            commentDTO.setPostId(comment.getShelterPostId());
-//            commentDTO.setUserId(comment.getUserId());
-//            commentDTO.setCreatedDate(comment.getCreatedDate());
-//            commentDTO.setContent(comment.getContent());
-//            if (comment.getParentComment() != null) {
-//                commentDTO.setParentCommentId(comment.getParentComment().getShelterPostCommentId());
-//            } else {
-//                commentDTO.setParentCommentId(null);
-//            }
-//            if (comment.getReplies() != null) {
-//                commentDTO.setReplies(comment.getReplies());
-//            } else {
-//                commentDTO.setReplies(null);
-//            }
-//
-//            return commentDTO;
-//
-//        }).collect(Collectors.toList());
-//
-//        return commentDtoList;
-//    }
 
     // 댓글 작성
     @Transactional
