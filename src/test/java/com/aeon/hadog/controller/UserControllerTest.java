@@ -61,8 +61,8 @@ class UserControllerTest {
     void login() throws Exception {
         // given
         LoginRequestDTO dto = LoginRequestDTO.builder()
-                .id("user3")
-                .password("user333!")
+                .id("user2")
+                .password("User3@@@")
                 .build();
 
         String json = new ObjectMapper().writeValueAsString(dto);

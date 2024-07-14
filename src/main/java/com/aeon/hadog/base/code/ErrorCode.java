@@ -36,7 +36,8 @@ public enum ErrorCode {
 
     SHELTER_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 보호소 공고가 존재하지 않습니다"),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 댓글이 존재하지 않습니다."),
-    ADOPT_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 임시보호 공고가 존재하지 않습니다.");
+    ADOPT_POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 임시보호 공고가 존재하지 않습니다."),
+    ADOPT_REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 리뷰가 존재하지 않습니다.");
 
     /*
      * 500 INTERNAL SERVER ERROR : 서버 에러

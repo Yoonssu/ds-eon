@@ -146,4 +146,12 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.ADOPT_POST_NOT_BELONG_TO_USER_ERROR.getStatus().value())
                 .body(new ErrorResponseDTO(ErrorCode.ADOPT_POST_NOT_BELONG_TO_USER_ERROR));
     }
+
+    @ExceptionHandler(AdoptReviewNotFoundException.class)
+    protected ResponseEntity<ErrorResponseDTO> adoptReviewNotFoundException(final AdoptReviewNotFoundException e) {
+        log.error("AdoptReviewNotFound : {}", e.getMessage());
+        return ResponseEntity
+                .status(ErrorCode.ADOPT_REVIEW_NOT_FOUND.getStatus().value())
+                .body(new ErrorResponseDTO(ErrorCode.ADOPT_REVIEW_NOT_FOUND));
+    }
 }

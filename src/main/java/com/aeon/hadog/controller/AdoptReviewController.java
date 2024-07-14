@@ -34,7 +34,7 @@ public class AdoptReviewController {
 
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<AdoptReviewDTO>> createReview(@AuthenticationPrincipal String user,
+    public ResponseEntity<ResponseDTO> createReview(@AuthenticationPrincipal String user,
                                                                     @RequestPart AdoptReviewDTO reviewDTO,
                                                                     @RequestPart List<MultipartFile> images) {
         try {
@@ -87,7 +87,7 @@ public class AdoptReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDTO<List<AdoptReviewDTO>>> getAllReviews() {
+    public ResponseEntity<ResponseDTO> getAllReviews() {
         List<AdoptReviewDTO> reviews = adoptReviewService.findAll().stream()
                 .map(review -> AdoptReviewDTO.builder()
                         .reviewId(review.getReviewId())
@@ -106,7 +106,7 @@ public class AdoptReviewController {
     }
 
     @PostMapping("/{reviewId}/comments")
-    public ResponseEntity<ResponseDTO<ReviewCommentDTO>> addComment(@PathVariable Long reviewId,
+    public ResponseEntity<ResponseDTO> addComment(@PathVariable Long reviewId,
                                                                     @RequestBody ReviewCommentDTO commentDTO,
                                                                     @AuthenticationPrincipal String user) {
         try {
@@ -137,7 +137,7 @@ public class AdoptReviewController {
 
 
     @GetMapping("/{reviewId}/comments")
-    public ResponseEntity<ResponseDTO<List<ReviewCommentDTO>>> getComments(@PathVariable Long reviewId) {
+    public ResponseEntity<ResponseDTO> getComments(@PathVariable Long reviewId) {
         List<ReviewCommentDTO> comments = adoptReviewService.findAllCommentsByReviewId(reviewId).stream()
                 .map(comment -> ReviewCommentDTO.builder()
                         .cmtId(comment.getCmtId())
@@ -153,7 +153,7 @@ public class AdoptReviewController {
 
 
     @PostMapping("/comments/{commentId}/replies")
-    public ResponseEntity<ResponseDTO<ReviewCommentDTO>> addReply(@PathVariable Long commentId,
+    public ResponseEntity<ResponseDTO> addReply(@PathVariable Long commentId,
                                                                   @RequestBody ReviewCommentDTO replyDTO,
                                                                   @AuthenticationPrincipal String user) {
         try {
@@ -193,7 +193,7 @@ public class AdoptReviewController {
 
 
     @GetMapping("/comments/{commentId}/replies")
-    public ResponseEntity<ResponseDTO<List<ReviewCommentDTO>>> getReplies(@PathVariable Long commentId) {
+    public ResponseEntity<ResponseDTO> getReplies(@PathVariable Long commentId) {
         List<ReviewCommentDTO> replies = adoptReviewService.findRepliesByParentCommentId(commentId).stream()
                 .map(reply -> ReviewCommentDTO.builder()
                         .cmtId(reply.getCmtId())
@@ -207,7 +207,7 @@ public class AdoptReviewController {
     }
 
     @DeleteMapping("/comments/{commentId}")
-    public ResponseEntity<ResponseDTO<Void>> deleteComment(@PathVariable Long commentId) {
+    public ResponseEntity<ResponseDTO> deleteComment(@PathVariable Long commentId) {
         try {
             // 대댓글이 있는지 확인하고 모두 삭제
             List<ReviewComment> replies = reviewCommentRepository.findByParentCommentCmtId(commentId);
@@ -226,7 +226,7 @@ public class AdoptReviewController {
 
     // 대댓글 삭제 메서드
     @DeleteMapping("/comments/replies/{replyId}")
-    public ResponseEntity<ResponseDTO<Void>> deleteReply(@PathVariable Long replyId) {
+    public ResponseEntity<ResponseDTO> deleteReply(@PathVariable Long replyId) {
         try {
             adoptReviewService.deleteComment(replyId);
             return ResponseEntity.ok(new ResponseDTO<>(200, true, "대댓글 삭제 성공", null));
