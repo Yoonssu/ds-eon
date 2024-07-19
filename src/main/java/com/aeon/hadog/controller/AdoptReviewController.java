@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class AdoptReviewController {
     private final UserRepository userRepository;
 
-    private final UserRepository userRepository;
     private final AdoptReviewService adoptReviewService;
     //대댓글
     private final ReviewCommentRepository reviewCommentRepository;
