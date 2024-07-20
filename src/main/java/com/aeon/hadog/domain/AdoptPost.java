@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Builder
@@ -48,4 +50,11 @@ public class AdoptPost {
     @Column(nullable=false)
     private boolean adoptStatus;
 
+    @OneToMany(mappedBy = "adoptPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AdoptPostImages> images;
+
+    // images 필드에 대한 getter 메서드 추가
+    public List<AdoptPostImages> getImages() {
+        return this.images;
+    }
 }

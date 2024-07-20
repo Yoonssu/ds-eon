@@ -1,4 +1,4 @@
-package com.aeon.hadog.base.dto;
+package com.aeon.hadog.base.dto.mypage;
 
 import lombok.*;
 
